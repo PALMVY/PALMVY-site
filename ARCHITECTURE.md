@@ -3,7 +3,7 @@
 **Autor:** Sam Campos Almeida
 **Propriedade de:** PALMVY (anteriormente West Sunset Labs)
 **Licença:** All Rights Reserved (Proprietary)
-**Última revisão:** 2026-09-30
+**Última revisão:** 2026-10-01
 
 ## 1. Visão geral
 Este documento dita as regras arquiteturais, visuais e de governança do portal da PALMVY, estúdio de tecnologia que desenvolve sites e aplicativos (Web e Mobile) e mantém produtos próprios: **Sossegue**, **TuneLab** e **SafeZone**. O sistema prioriza performance, manutenibilidade, segurança e uma estética "Dark Mode Premium" inspirada na luz da costa oeste (California Dreamin'. Digital reality.).
@@ -55,12 +55,19 @@ Este documento dita as regras arquiteturais, visuais e de governança do portal 
 - **Compartilhamento:** `app/opengraph-image.png` e `app/twitter-image.png` (1200×630). Mantenha o conteúdo importante no centro, porque o WhatsApp corta as bordas.
 
 ## 5. Estrutura de pastas
-- `/app`: apenas roteamento, metadados e união de seções (Views). Landing pages de produto ficam em `app/produtos/[slug]`, geradas a partir de `core/data/products.ts`. Páginas legais (`app/privacidade`, `app/termos`) renderizam os textos de `core/data/legal`. `app/sitemap.ts` e `app/robots.ts` saem de `core/data/sitemap.ts` e `core/data/site.ts` (domínio em um lugar só). Páginas legais em rascunho ficam fora do sitemap.
-- `/components/ui`: blocos visuais sem regra de negócio (`Button`, `Card`, `CtaLink`, `Logo`). Recebem tudo por props.
-- `/components/sections`: blocos de contexto da página (`Navbar`, `Hero`, `Products`, `Footer`...). Componentes que precisam de estado do navegador (ex.: `MobileMenu`) levam `'use client'` e ficam o menor possível.
-- `/core/data`: todo dado estático e configuração (textos, links, produtos, navegação, contato), isolado dos componentes React. Testes desses módulos ficam ao lado deles (`*.test.ts`).
-- `/public/images`: imagens estáticas (`logo/`, `products/`).
+- `/app`: apenas roteamento, metadados e união de seções (Views). Landing pages de produto ficam em `app/produtos/[slug]`, geradas a partir de `core/data/products.ts` (barrel) e dos arquivos em `core/data/products/`. Páginas legais (`app/privacidade`, `app/termos`) renderizam os textos de `core/data/legal`. `app/sitemap.ts` e `app/robots.ts` saem de `core/data/sitemap.ts` e `core/data/site.ts` (domínio em um lugar só). Páginas legais em rascunho ficam fora do sitemap.
+- `/components/ui`: blocos visuais sem regra de negócio (`Button`, `Card`, `CtaLink`, `Logo`, `PhoneFrame`, `PhoneStage`, `ProductVisual`). Recebem tudo por props.
+- `/components/sections`: blocos de contexto da página (`Navbar`, `Hero`, `Products`, `Footer`...). A landing de produto é composta por `ProductLanding`, que monta `ProductHero`, `ProductHighlights`, `ProductSteps`, `ProductSpotlight`, `ProductFaq` e `ProductClosing`. Componentes que precisam de estado do navegador (ex.: `MobileMenu`) levam `'use client'` e ficam o menor possível.
+- `/core/data`: todo dado estático e configuração (textos, links, produtos, navegação, contato). Cada produto tem seu arquivo em `core/data/products/<produto>.ts` (tipos em `types.ts`); `products.ts` só reúne e reexporta, isolado dos componentes React. Testes desses módulos ficam ao lado deles (`*.test.ts`).
+- `/public/images`: imagens estáticas (`logo/`, `products/`). Imagens de produto ficam em `public/images/products/<produto>-app/`, em minúsculas e otimizadas (WebP). Mantenha os originais pesados fora de `public`.
+- **Maiúsculas e minúsculas em caminhos:** o Windows ignora a diferença, a Vercel (Linux) não. O teste de `core/data/products.test.ts` confere a existência de cada imagem com a grafia exata.
 - Bloco visual repetido deve virar componente imediatamente (ex.: o estilo dos botões vive em `buttonStyles.ts` e é usado por `Button` e `CtaLink`).
+
+### 5.1 Landing de produto
+- Seções opcionais (`heroScreenshots`, `steps`, `spotlight`, `faq`) só aparecem se o produto tiver esses dados. Produto sem prints continua com o visual de logo.
+- Cada print tem `alt` descritivo e dimensões reais (evita salto de layout). No máximo dois prints no hero.
+- Não invente preço, prazo ou promessa de segurança nos textos. Só publique o que o produto cumpre hoje e o que a Política de Privacidade sustenta.
+- Prints devem usar dados de demonstração, sem informação de pessoas reais.
 
 ## 6. Contato e conversão
 - O destino principal dos CTAs é o **WhatsApp**, definido em `core/data/contact.ts` a partir da variável `NEXT_PUBLIC_WHATSAPP_NUMBER` (país + DDD + número, só dígitos).
@@ -86,7 +93,7 @@ Este documento dita as regras arquiteturais, visuais e de governança do portal 
 - **O que testar primeiro:** lógica pura em `core/` (ex.: `buildContactLink`), integridade de dados (ex.: cada link de `NAV_LINKS` tem uma seção com o `id` correspondente) e componentes com implicação de segurança (ex.: `CtaLink` e o `rel="noopener noreferrer"`).
 - **Cobertura:** mire em tudo que envolve dinheiro, contato, autenticação ou dados de usuário. Cobertura de 100% por vaidade não é meta.
 - **Antes de cada commit:** rodar `npm test`, `npm run lint` e `npm run build`.
-- **Ainda sem cobertura:** comportamento interativo do `MobileMenu` (abrir, fechar com Esc). Exige um teste de navegador (Playwright) ou `jsdom`, que dependem de aprovação de nova biblioteca.
+- **Componentes interativos:** testados com `jsdom` e `@testing-library/react` (ex.: `MobileMenu`), declarando `// @vitest-environment jsdom` no topo do arquivo. Componentes só de renderização usam `renderToStaticMarkup` no ambiente node (ex.: `ProductLanding`).
 
 ## 10. Segurança
 - Nenhum segredo (chaves de API, tokens, senhas) no código, no frontend ou no repositório.
@@ -109,7 +116,7 @@ Qualquer modelo de IA que modifique este repositório DEVE:
 7. Verificar o resultado (tipos, lint, testes, build) antes de afirmar que algo está pronto.
 
 ## 12. Decisões pendentes
-- Conteúdo das landing pages: hoje os destaques são reescritas da descrição de cada produto. Faltam capturas de tela, público-alvo e, no SafeZone, a logo. Definir se o objetivo passa a ser lista de espera (exige formulário validado no servidor e página de Privacidade antes de coletar dados).
+- Conteúdo das landing pages: o Sossegue já tem prints, passos, FAQ e destaque de ritmo. TuneLab e SafeZone ainda usam só os destaques; faltam prints, passos e FAQ, e no SafeZone a logo. Definir se o objetivo passa a ser lista de espera (exige formulário validado no servidor e página de Privacidade antes de coletar dados).
 - Revisão jurídica de Privacidade e Termos. O texto atual é rascunho (`isDraft: true`, página com `noindex`). Para publicar, substitua o conteúdo de `core/data/legal/privacy.ts` e `terms.ts` mantendo o formato `LegalDocument` e troque `isDraft` para `false`. O rascunho pressupõe medição de audiência sem cookies e nenhum formulário: revise se isso mudar.
-- URLs de Instagram e Twitter/X: preencher `SOCIAL_LINKS` em `core/data/contact.ts`. Enquanto o `href` for `null`, o link não aparece no Footer.
+- Redes sociais: `SOCIAL_LINKS` em `core/data/contact.ts` já tem Instagram, X e Dev.to. Um `href` `null` esconde o link no Footer.
 - Versão do logo para fundos claros.

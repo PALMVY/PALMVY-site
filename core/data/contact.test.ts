@@ -74,6 +74,15 @@ describe('getSocialLinks', () => {
     expect(getSocialLinks([{ label: 'Instagram', href: null }])).toEqual([]);
   });
 
+  it('expõe só links https e sem rótulos repetidos nos perfis do site', () => {
+    const links = getSocialLinks();
+    const labels = links.map(({ label }) => label);
+
+    expect(links.length).toBeGreaterThan(0);
+    expect(links.every(({ href }) => href.startsWith('https://'))).toBe(true);
+    expect(new Set(labels).size).toBe(labels.length);
+  });
+
   it('mantém apenas URLs https', () => {
     const links = getSocialLinks([
       { label: 'Instagram', href: 'https://instagram.com/palmvy' },

@@ -2,6 +2,8 @@ import Image from "next/image";
 import { HorizonLines } from "@/components/ui/HorizonLines";
 import type { Product } from "@/core/data/products";
 
+const DEFAULT_LOGO_SIZE = { width: 320, height: 220 };
+
 export function ProductVisual({
   product,
   className = "",
@@ -29,8 +31,8 @@ export function ProductVisual({
           <Image
             src={product.image}
             alt={product.name}
-            width={320}
-            height={220}
+            width={product.imageSize?.width ?? DEFAULT_LOGO_SIZE.width}
+            height={product.imageSize?.height ?? DEFAULT_LOGO_SIZE.height}
             className="h-auto w-36 sm:w-40 object-contain"
           />
         </div>

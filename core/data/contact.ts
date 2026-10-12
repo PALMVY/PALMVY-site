@@ -9,23 +9,20 @@ export const CONTACT_EMAIL = 'hello@palmvy.com.br';
 
 export type SocialLink = {
   label: string;
-  /** null enquanto o perfil não existe: o link fica escondido no site. */
   href: string | null;
 };
 
-// Preencha o `href` com a URL completa (https://...) quando o perfil estiver no ar.
 const SOCIAL_LINKS: SocialLink[] = [
-  { label: 'Instagram', href: null },
-  { label: 'Twitter/X', href: null },
+  { label: 'Instagram', href: 'https://www.instagram.com/palmvyco/' },
+  { label: 'Twitter/X', href: 'https://x.com/palmvyco' },
+  { label: 'Dev.to', href: 'https://dev.to/palmvyco' },
 ];
 
 const DEFAULT_WHATSAPP_MESSAGE =
   'Olá! Vim pelo site da PALMVY e gostaria de conversar sobre um projeto.';
 
-// País + DDD + número, só dígitos (ex.: 5511999999999).
 const WHATSAPP_PHONE_PATTERN = /^\d{10,15}$/;
 
-// Sem número válido configurado, o CTA leva à seção de contato da home.
 const FALLBACK_LINK: ContactLink = {
   href: '/#como-trabalhamos',
   isExternal: false,
