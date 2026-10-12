@@ -50,18 +50,38 @@ describe('ProductLanding com conteúdo completo (Sossegue)', () => {
   });
 });
 
-describe('ProductLanding sem conteúdo extra (TuneLab)', () => {
-  const html = renderLanding('tunelab');
+describe('ProductLanding sem conteúdo extra (SafeZone)', () => {
+  const html = renderLanding('safezone');
 
   it('mantém abertura, destaques e contato', () => {
-    expect(html).toContain('TuneLab');
+    expect(html).toContain('SafeZone');
     expect(html).toContain('Destaques');
-    expect(html).toContain('Quer acompanhar o TuneLab?');
+    expect(html).toContain('Quer acompanhar o SafeZone?');
   });
 
   it('não cria seções vazias', () => {
     expect(html).not.toContain('Como funciona');
     expect(html).not.toContain('Perguntas frequentes');
     expect(html).not.toContain('<details');
+  });
+});
+
+describe('ProductLanding do TuneLab', () => {
+  const html = renderLanding('tunelab');
+  const tunelab = products.find(({ id }) => id === 'tunelab');
+
+  it('mostra os passos e as perguntas, sem a seção de ritmo', () => {
+    expect(html).toContain('Como funciona');
+    expect(html).toContain('Perguntas frequentes');
+    expect(countMatches(html, /<details[\s>]/g)).toBe(tunelab?.faq?.length);
+  });
+
+  it('dá texto alternativo a todas as imagens', () => {
+    const images = html.match(/<img\b[^>]*>/g) ?? [];
+
+    expect(images.length).toBeGreaterThan(0);
+    for (const image of images) {
+      expect(image).toMatch(/\balt="[^"]+"/);
+    }
   });
 });

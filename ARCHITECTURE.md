@@ -116,7 +116,7 @@ Qualquer modelo de IA que modifique este repositório DEVE:
 7. Verificar o resultado (tipos, lint, testes, build) antes de afirmar que algo está pronto.
 
 ## 12. Decisões pendentes
-- Conteúdo das landing pages: o Sossegue já tem prints, passos, FAQ e destaque de ritmo. TuneLab e SafeZone ainda usam só os destaques; faltam prints, passos e FAQ, e no SafeZone a logo. Definir se o objetivo passa a ser lista de espera (exige formulário validado no servidor e página de Privacidade antes de coletar dados).
+- Conteúdo das landing pages: o Sossegue já tem prints, passos, FAQ e destaque de ritmo. O TuneLab já tem prints (2 por enquanto), passos e FAQ, e falta o print do Setup Completo com o texto legal corrigido. O SafeZone ainda usa só os destaques e falta a logo. Definir se o objetivo passa a ser lista de espera (exige formulário validado no servidor e página de Privacidade antes de coletar dados).
 - Revisão jurídica de Privacidade e Termos. O texto atual é rascunho (`isDraft: true`, página com `noindex`). Para publicar, substitua o conteúdo de `core/data/legal/privacy.ts` e `terms.ts` mantendo o formato `LegalDocument` e troque `isDraft` para `false`. O rascunho pressupõe medição de audiência sem cookies e nenhum formulário: revise se isso mudar.
 - Redes sociais: `SOCIAL_LINKS` em `core/data/contact.ts` já tem Instagram, X e Dev.to. Um `href` `null` esconde o link no Footer.
 - Versão do logo para fundos claros.
