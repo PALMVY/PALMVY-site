@@ -13,7 +13,7 @@ const screens = {
   },
   garagem: {
     src: `${IMAGES_BASE}/garagem.webp`,
-    alt: "Tela inicial do TuneLab com a garagem Meus carros, o saldo de créditos e sugestões de modificações para você.",
+    alt: "Tela inicial do TuneLab com a garagem Meus carros, seu saldo de análises e sugestões de modificações para você.",
     ...APP_SCREEN_SIZE,
   },
 } satisfies Record<string, ProductScreenshot>;
@@ -77,6 +77,12 @@ export const tunelab: Product = {
       question: "Preciso informar o modelo do carro?",
       answer:
         "Não, é opcional. Mas informar marca, modelo e ano deixa as peças sugeridas muito mais precisas.",
+    },
+    {
+      topic: "Preço",
+      question: "O TuneLab é pago?",
+      answer:
+        "Você começa de graça: entrando com o Google e verificando seu celular por SMS, ganha 1 análise grátis. Depois, as análises são vendidas em pacotes, sem assinatura: 1 análise por R$ 6,90, 5 por R$ 24,90 ou 15 por R$ 59,90. Cada análise de carro usa 1 crédito. Seus créditos não expiram, e o saldo aparece na tela inicial do app.",
     },
     {
       topic: "Limites e lançamento",

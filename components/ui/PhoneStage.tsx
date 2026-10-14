@@ -34,10 +34,11 @@ const SHAPE_LAYOUTS: Record<PhoneStageShape, ShapeLayout> = {
   // Os celulares nascem do pé do painel: a borda esconde o corte da imagem.
   square: {
     container: "aspect-square rounded-3xl border border-cloud/10",
-    back: "bottom-[-20%] left-[6%] w-[40%] brightness-75",
-    front: "bottom-[-9%] right-[8%] w-[50%]",
+    // Sem sobreposição: a tela de trás aparece inteira na largura.
+    back: "bottom-[-20%] left-[5%] w-[40%] brightness-75",
+    front: "bottom-[-7%] right-[5%] w-[46%]",
     backSizes: "(min-width: 768px) 220px, 40vw",
-    frontSizes: "(min-width: 768px) 276px, 50vw",
+    frontSizes: "(min-width: 768px) 254px, 46vw",
   },
   wide: {
     container: "aspect-video",

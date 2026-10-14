@@ -29,7 +29,5 @@ Thumbs.db
 .impeccable/
 .playwright-mcp/
 
-# Documentos internos: o repositório é público e a marca é anônima
-CLAUDE.md
-DESIGN.md
-PRODUCT.md
+# Protótipos de design (referência local, já implementados no site)
+/design/

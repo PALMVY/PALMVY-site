@@ -43,20 +43,21 @@ function HeroShowcase() {
     <div aria-hidden="true" className="relative mx-auto h-136 w-full max-w-md lg:h-152">
       {back && (
         <>
-          <div className="absolute right-0 top-6 w-[52%] rotate-6 opacity-90">
+          {/* Encosta no da frente sem esconder o título da tela de trás. */}
+          <div className="absolute right-0 top-6 w-[46%] rotate-6 opacity-90">
             <PhoneFrame
               screenshot={back.screenshot}
-              sizes="(min-width: 1024px) 250px, 45vw"
+              sizes="(min-width: 1024px) 220px, 42vw"
               preload
             />
           </div>
           <ShowcaseTag product={back.product} className="bottom-24 right-0" />
         </>
       )}
-      <div className="absolute left-4 top-0 w-[58%] -rotate-3">
+      <div className="absolute left-4 top-0 w-[54%] -rotate-3">
         <PhoneFrame
           screenshot={front.screenshot}
-          sizes="(min-width: 1024px) 280px, 52vw"
+          sizes="(min-width: 1024px) 260px, 50vw"
           preload
         />
       </div>
