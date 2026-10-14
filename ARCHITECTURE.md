@@ -35,8 +35,9 @@ Este documento dita as regras arquiteturais, visuais e de governança do portal 
 | `muted` | `#8FA1AD` | Texto secundário |
 | `sunset` / `sunset-dark` | `#FF7A45` / `#E2673A` | Acento, CTAs, o sol do logo |
 | `gold` | `#FFC857` | Detalhes pontuais (não é usado no logo) |
-| `pacific-blue` | `#147D9A` | Identidade de produto |
-| `palm-green` | `#164A43` | Identidade de produto |
+| `pacific-blue` | `#147D9A` | Identidade de produto (Sossegue) |
+| `palm-green` | `#164A43` | Identidade de produto (SafeZone) |
+| `amber` | `#6B4413` | Identidade de produto (TuneLab) |
 
 - Use sempre os tokens (`bg-pacific-night`), nunca hex solto em componentes.
 - **Sem gradientes de cor.** A profundidade vem de grão sutil (`.grain-overlay`), linhas de horizonte e contraste entre superfícies.
@@ -88,6 +89,8 @@ Este documento dita as regras arquiteturais, visuais e de governança do portal 
 - Apenas utilitários nativos do Tailwind/CSS. Proibido Framer Motion, GSAP ou similares sem autorização.
 - Transições específicas (`transition-colors`, `transition-[opacity,transform,visibility]`). Evite `transition-all`.
 - Todo movimento respeita `prefers-reduced-motion` (`motion-reduce:transition-none`).
+- Transições entre estados e rotas usam a View Transitions API nativa: `document.startViewTransition` no orçamento e o `<ViewTransition>` do React (já incluído no Next 16, sem configuração) no painel que viaja do card para a landing. Sem suporte, a troca é direta.
+- `types/react-view-transition.d.ts` tipa o `ViewTransition`, que o `@types/react` 19.1.4 ainda não conhece. Apague o arquivo ao atualizar o `@types/react` para 19.2+.
 
 ## 9. Testes
 - **Ferramenta:** Vitest. Comandos: `npm test` (uma vez) e `npm run test:watch`.

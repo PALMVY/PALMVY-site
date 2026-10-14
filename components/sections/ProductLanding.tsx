@@ -41,7 +41,13 @@ export function ProductLanding({ product }: { product: Product }) {
         contactNote={contactNote}
       />
       <ProductHighlights name={product.name} highlights={product.highlights} />
-      {steps && steps.length > 0 && <ProductSteps steps={steps} />}
+      {steps && steps.length > 0 && (
+        <ProductSteps
+          steps={steps}
+          accentColor={product.accentColor}
+          tone={product.tone}
+        />
+      )}
       {spotlight && (
         <ProductSpotlight
           spotlight={spotlight}

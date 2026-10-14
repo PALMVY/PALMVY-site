@@ -1,8 +1,17 @@
 'use client';
 
-import { useId, useState } from 'react';
+import { useId, useRef, useState, type ChangeEvent } from 'react';
+import { flushSync } from 'react-dom';
 import { CtaLink } from '@/components/ui/CtaLink';
+import { PriceOdometer } from '@/components/ui/PriceOdometer';
 import type { ContactLink } from '@/core/data/contact';
+
+// Nome compartilhado pela opção clicada (antes) e pela caixa da estimativa (depois).
+const MORPH_NAME = 'quote-pick';
+
+const canMorph = (): boolean =>
+  typeof document.startViewTransition === 'function' &&
+  !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 export type QuoteOption = {
   id: string;
@@ -27,9 +36,32 @@ const getDefaultId = (options: readonly QuoteOption[]): string | undefined =>
 export function QuotePicker({ options }: QuotePickerProps) {
   const [selectedId, setSelectedId] = useState(() => getDefaultId(options));
   const groupName = useId();
+  const estimateRef = useRef<HTMLDivElement>(null);
   const selected = options.find(({ id }) => id === selectedId) ?? options[0];
 
   if (!selected) return null;
+
+  // A opção clicada se transforma na caixa da estimativa (View Transition).
+  // Sem suporte ou com movimento reduzido, a troca é direta.
+  const select = (id: string, event: ChangeEvent<HTMLInputElement>) => {
+    const chip = event.currentTarget.closest('label');
+    const estimate = estimateRef.current;
+
+    if (!chip || !estimate || !canMorph()) {
+      setSelectedId(id);
+      return;
+    }
+
+    chip.style.viewTransitionName = MORPH_NAME;
+    const transition = document.startViewTransition(() => {
+      chip.style.viewTransitionName = '';
+      estimate.style.viewTransitionName = MORPH_NAME;
+      flushSync(() => setSelectedId(id));
+    });
+    transition.finished.finally(() => {
+      estimate.style.viewTransitionName = '';
+    });
+  };
 
   return (
     <div className="flex flex-col gap-6">
@@ -49,7 +81,7 @@ export function QuotePicker({ options }: QuotePickerProps) {
                 name={groupName}
                 value={id}
                 checked={id === selected.id}
-                onChange={() => setSelectedId(id)}
+                onChange={(event) => select(id, event)}
                 className="sr-only"
               />
               {label}
@@ -59,17 +91,23 @@ export function QuotePicker({ options }: QuotePickerProps) {
       </fieldset>
 
       <div
+        ref={estimateRef}
         aria-live="polite"
         className="rounded-md border border-dashed border-sunset/45 bg-sunset/5 px-5 py-4"
       >
         {selected.estimate ? (
-          <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+          <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
             <span className="font-mono text-xs uppercase tracking-widest text-sunset">
               Estimativa · {selected.estimate.name}
             </span>
-            <span className="text-lg text-cloud tabular-nums">
-              <span className="text-muted">a partir de </span>
-              <strong className="font-bold">{selected.estimate.price}</strong>
+            <span className="flex flex-col items-start sm:items-end">
+              <span className="font-mono text-xs uppercase tracking-widest text-sunset">
+                a partir de
+              </span>
+              <PriceOdometer
+                price={selected.estimate.price}
+                className="text-3xl font-extrabold leading-tight tracking-tight text-cloud sm:text-4xl"
+              />
             </span>
           </div>
         ) : (

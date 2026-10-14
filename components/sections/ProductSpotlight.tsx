@@ -29,7 +29,7 @@ export function ProductSpotlight({
           <SectionLabel className="mb-4">Em detalhe</SectionLabel>
           <h2
             id="spotlight-titulo"
-            className="mb-6 text-balance font-display text-4xl font-bold leading-none tracking-tight text-cloud sm:text-5xl"
+            className="mb-6 text-balance font-display text-4xl font-bold leading-none tracking-tight text-cloud sm:text-5xl lg:text-6xl"
           >
             {spotlight.title}
           </h2>

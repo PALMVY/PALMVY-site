@@ -40,7 +40,7 @@ function HeroShowcase() {
 
   return (
     // Decorativo: os mesmos apps aparecem, com texto, logo abaixo em Produtos.
-    <div aria-hidden="true" className="relative mx-auto h-136 w-full max-w-md lg:h-152">
+    <div aria-hidden="true" className="relative mx-auto h-128 w-full max-w-md lg:h-152">
       {back && (
         <>
           {/* Encosta no da frente sem esconder o título da tela de trás. */}
@@ -61,17 +61,17 @@ function HeroShowcase() {
           preload
         />
       </div>
-      <ShowcaseTag product={front.product} className="bottom-8 left-0" />
+      <ShowcaseTag product={front.product} className="bottom-24 left-0" />
     </div>
   );
 }
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden pt-12 pb-24 sm:pt-20 sm:pb-32">
+    <section className="relative overflow-hidden px-4 pt-12 pb-24 sm:px-6 sm:pt-20 sm:pb-32 lg:px-8">
       <HorizonLines className="absolute inset-x-0 bottom-0 h-48 w-full text-soft-gray/10 sm:h-64" />
 
-      <div className="relative mx-auto grid max-w-6xl items-center gap-16 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
+      <div className="relative mx-auto grid max-w-6xl items-center gap-16 lg:grid-cols-2">
         <div>
           <SectionLabel className="mb-7">Estúdio de produto</SectionLabel>
 
@@ -83,11 +83,11 @@ export function Hero() {
             aria-label="O que a PALMVY não faz"
             className="mt-9 flex flex-col gap-2.5 font-mono text-base text-cloud sm:text-lg"
           >
-            {MANIFESTO.map(({ struck, after }) => (
+            {MANIFESTO.map(({ struck, after }, index) => (
               <li key={struck} className="flex items-baseline gap-4">
                 <span aria-hidden="true" className="text-sunset">—</span>
                 <span>
-                  Sem <Strike>{struck}</Strike>
+                  Sem <Strike drawOrder={index}>{struck}</Strike>
                   {after}
                 </span>
               </li>

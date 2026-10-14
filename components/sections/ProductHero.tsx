@@ -1,5 +1,6 @@
 import { CtaLink } from "@/components/ui/CtaLink";
 import { PhoneStage } from "@/components/ui/PhoneStage";
+import { ProductArtTransition } from "@/components/ui/ProductArtTransition";
 import { ProductVisual } from "@/components/ui/ProductVisual";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { StatusBadge } from "@/components/ui/StatusBadge";
@@ -80,18 +81,21 @@ export function ProductHero({
           </div>
         </div>
 
-        {heroScreenshots && heroScreenshots.length > 0 ? (
-          <PhoneStage
-            screenshots={heroScreenshots}
-            accentColor={product.accentColor}
-            tone={product.tone}
-            preload
-          />
-        ) : (
-          <div className="overflow-hidden rounded-3xl border border-cloud/10">
-            <ProductVisual product={product} className="aspect-square" />
-          </div>
-        )}
+        {/* Mesmo painel do card na home: ele cresce até aqui na navegação. */}
+        <ProductArtTransition productId={product.id}>
+          {heroScreenshots && heroScreenshots.length > 0 ? (
+            <PhoneStage
+              screenshots={heroScreenshots}
+              accentColor={product.accentColor}
+              tone={product.tone}
+              preload
+            />
+          ) : (
+            <div className="overflow-hidden rounded-3xl border border-cloud/10">
+              <ProductVisual product={product} className="aspect-square" />
+            </div>
+          )}
+        </ProductArtTransition>
       </div>
     </section>
   );

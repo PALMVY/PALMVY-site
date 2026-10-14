@@ -32,7 +32,7 @@ export function ProductClosing({
             <SectionLabel className="mb-4">Contato</SectionLabel>
             <h2
               id="contato-titulo"
-              className="text-balance font-display text-4xl font-extrabold leading-[0.95] tracking-tighter text-cloud sm:text-5xl"
+              className="text-balance font-display text-5xl font-extrabold leading-[0.95] tracking-tighter text-cloud sm:text-6xl"
             >
               {title}
             </h2>

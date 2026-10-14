@@ -1,5 +1,6 @@
 import { CtaLink } from "@/components/ui/CtaLink";
 import { PhoneStage } from "@/components/ui/PhoneStage";
+import { ProductArtTransition } from "@/components/ui/ProductArtTransition";
 import { ProductVisual } from "@/components/ui/ProductVisual";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { INTERACTIVE_SURFACE } from "@/components/ui/surfaceStyles";
@@ -66,7 +67,9 @@ export function ProductCard({
     >
       {/* No destaque, a arte fica à direita no desktop e no topo no mobile. */}
       <div className={featured ? "md:order-2" : ""} aria-hidden="true">
-        <ProductArt product={product} featured={featured} />
+        <ProductArtTransition productId={product.id}>
+          <ProductArt product={product} featured={featured} />
+        </ProductArtTransition>
       </div>
 
       <div className={`flex flex-1 flex-col gap-6 ${contentPadding}`}>

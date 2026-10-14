@@ -12,6 +12,7 @@ colors:
   gold: "#ffc857"
   pacific-blue: "#147d9a"
   palm-green: "#164a43"
+  amber: "#6b4413"
   hairline: "rgba(245, 247, 244, 0.10)"
 typography:
   display:
@@ -140,10 +141,10 @@ Uma noite azul-marinho em camadas, cinzas frios para leitura e um laranja de pô
 - **Brasa** (sunset-dark): só o hover do CTA principal.
 
 ### Secondary
-- **Último Raio** (gold): detalhe pontual e raro no portal. A linha de resposta sob o termo riscado ("O piso está na tela...") e o ponto do status "Em breve". Nunca em CTA, nunca no logo. Exceção: é a cor de identidade do TuneLab, e como tal pode preencher os painéis desse produto (ver The Product Color Rule).
+- **Último Raio** (gold): detalhe pontual e raro no portal. A linha de resposta sob o termo riscado ("O piso está na tela...") e o ponto do status "Em breve". Nunca em CTA, nunca no logo, nunca em painel de produto.
 
 ### Tertiary
-- **Água Funda** (pacific-blue) e **Palmeira** (palm-green): cores de identidade de produto (Sossegue e SafeZone), usadas nos painéis e marcadores de cada app (`accentColor`) e no badge "Disponível". Não são cores do portal; não aparecem em títulos, CTAs ou fundos de seção.
+- **Água Funda** (pacific-blue), **Âmbar** (amber) e **Palmeira** (palm-green): cores de identidade de produto (Sossegue, TuneLab e SafeZone), usadas nos painéis e marcadores de cada app (`accentColor`) e no badge "Disponível". As três são escuras de propósito, para o laranja continuar sendo o único ponto quente da tela. Não são cores do portal; não aparecem em títulos, CTAs ou fundos de seção.
 
 ### Neutral
 - **Noite do Pacífico** (pacific-night): fundo de toda página, texto de botões sobre laranja e `cloud`, fundo das molduras de celular.
@@ -158,7 +159,7 @@ Uma noite azul-marinho em camadas, cinzas frios para leitura e um laranja de pô
 
 **The No-Gradient Rule.** Proibido gradiente de cor, em fundo, texto ou borda. A transição de luz é feita por superfícies sólidas, grão e linhas.
 
-**The Product Color Rule.** A `accentColor` de cada produto (`pacific-blue` no Sossegue, `gold` no TuneLab, `palm-green` no SafeZone) só preenche os painéis de arte daquele produto: o palco dos celulares e o painel da logo. Fora deles, o portal usa só a família noite + névoa + sol.
+**The Product Color Rule.** A `accentColor` de cada produto (`pacific-blue` no Sossegue, `amber` no TuneLab, `palm-green` no SafeZone) só preenche os painéis de arte daquele produto: o palco dos celulares e o painel da logo. Fora deles, o portal usa só a família noite + névoa + sol.
 
 ## Typography
 
@@ -169,7 +170,8 @@ Uma noite azul-marinho em camadas, cinzas frios para leitura e um laranja de pô
 **Character:** uma família só, em dois registros. Geist Sans pesada e apertada grita a ideia; Geist Mono em caixa alta e espaçada sussurra o dado técnico. O contraste é de peso e de textura, não de família.
 
 ### Hierarchy
-- **Display** (800, 3.75rem no mobile → 4.5rem em `sm` → 6rem em `lg`, line-height 0.92, tracking -0.05em): o `h1` do hero e o título de fechamento ("Quer começar?"). Uma palavra pode vir em `sunset`.
+- **Display** (800, 3.75rem no mobile → 4.5rem a partir de `sm`, line-height 0.92, tracking -0.05em): o `h1` do hero e das landings. Para em 4.5rem de propósito, para os CTAs caberem na primeira dobra em 1440×900. Uma palavra pode vir em `sunset`.
+- **Closing** (800, 3rem → 3.75rem em `sm`, line-height 0.95, tracking -0.05em): o título de fechamento ("Quer começar?", "Quer acompanhar o X?") e o `h1` das páginas legais. O mesmo tamanho em toda página.
 - **Headline** (700, 2.25rem → 3rem → 3.75rem, line-height 1, tracking -0.025em): `h2` de seção. Sempre com `text-balance`.
 - **Title** (700, 1.5rem, tracking -0.025em): passos, nomes de faixa de preço. Nomes de produto sobem para 800 e 2.25rem–3.75rem.
 - **Price** (800, 1.875rem → 2.25rem, algarismos tabulares): valores em reais. Sempre precedidos do rótulo mono "A partir de".
@@ -226,7 +228,12 @@ Diretos e pesados: texto em caixa alta, espaçado, com seta `→` empurrada para
 
 ### Chips
 - **Style:** pílula de 44px, borda `soft-gray` a 20%, texto Mono caixa alta em `soft-gray`. O input de rádio fica escondido e o foco aparece no rótulo.
-- **State:** selecionado preenche com `sunset` e texto `pacific-night`; hover clareia a borda para 40%.
+- **State:** selecionada ganha borda `sunset`, fundo `sunset` a 10% e texto `cloud` (não preenche de laranja, para não disputar com o CTA). Hover clareia a borda para 40%.
+
+### Estimativa do orçamento
+Caixa tracejada em `sunset` a 45% sob as opções. Mostra "Estimativa · tipo" em Mono, "A partir de" em Mono `sunset` e o preço em Price (800, 1.875rem → 2.25rem), alinhado à direita a partir de `sm` e à esquerda no celular.
+- **Contador:** o preço é um contador mecânico (`PriceOdometer`). Cada algarismo é uma fita de 0 a 9 que rola até o dígito (900ms, `cubic-bezier(0.16, 1, 0.3, 1)`, 45ms de atraso por casa, da esquerda para a direita). Uma casa nova nasce rolando do zero. Leitores de tela leem o preço por extenso; os dígitos animados ficam escondidos.
+- **Transição:** a opção clicada vira a caixa (View Transition de 480ms, só nesse par; o resto da página troca sem fade). Sem suporte ou com `prefers-reduced-motion`, a troca é direta e o contador não rola.
 
 ### Status Badge
 Pílula pequena em Mono caixa alta com ponto de 6px à esquerda. "Em breve": borda `soft-gray` a 20%, ponto `gold`. "Disponível": borda e fundo `palm-green`, ponto `cloud`. O texto sempre diz o status; a cor não carrega a informação sozinha.
@@ -247,11 +254,17 @@ O rótulo `[ NOME ]` em Geist Mono, caixa alta, `sunset`, 12px → 14px. Abre to
 ### Strike
 O jargão que a PALMVY não vende, riscado: texto em `muted`, risco em `sunset` de 2px (3px a partir de `sm`). Aparece em listas de manifesto ("Sem ~~"soluções"~~ mágicas.") e pode ser seguido de uma resposta em `gold`.
 
+**Movimento (o momento autoral da abertura da página):** no manifesto do hero, o risco é desenhado da esquerda para a direita sobre cada termo, um depois do outro (520ms, `cubic-bezier(0.16, 1, 0.3, 1)`, 220ms entre termos, começando em 450ms), e o termo apaga de `cloud` para `muted` junto com a linha. Roda uma vez ao abrir a página. Com `prefers-reduced-motion`, o risco já aparece pronto. Os outros riscos do site são estáticos.
+
 ### Price Ledger
 Régua de preços: cada faixa é uma linha com nome (Title) e escopo (`muted`) à esquerda; à direita, o rótulo mono "A partir de" em `sunset` sobre o valor em Price. Linhas separadas por `hairline`. Abaixo, "Sempre incluso" em lista de duas colunas com `+` mono em `sunset`.
 
 ### Phone Stage
 Prints reais dos apps em molduras de 32px com sombra Device. No hero, dois aparelhos sobrepostos e levemente inclinados (-3° e 6°), cada um com uma etiqueta do produto (ponto na cor do app + nome em Mono). Os aparelhos são decorativos (`aria-hidden`), porque os mesmos produtos aparecem com texto logo abaixo.
+
+Nas landings, o "Passo a passo" é o pico da página: a partir de 1024px, uma faixa contínua na cor do produto (com as linhas de horizonte) atravessa as colunas, e um aparelho sobe do pé da faixa em cada passo, no mesmo eixo esquerdo do texto. Abaixo, `01 / 03` em Mono e o título do passo em Sans 800. No tablet (768–1023px), cada passo vira uma linha com o painel colorido à esquerda e o texto à direita: três colunas não cabem o aparelho nessa largura. No celular, cada passo tem o próprio painel, empilhado. Destaques e FAQ ficam em régua, de propósito mais quietos.
+
+**Painel que viaja:** o painel de arte do card na home e o painel do topo da landing são o mesmo objeto (`ProductArtTransition`, View Transition do React com `name` por produto). Ao clicar em "Conhecer o X", o painel cresce e voa até o topo da landing (560ms, `cubic-bezier(0.16, 1, 0.3, 1)`, desfoque de 2px no meio do caminho, recortado com raio de 24px); o "Todos os produtos" faz o caminho de volta. O resto da página troca sem fade. Sem suporte (Firefox) ou com `prefers-reduced-motion`, a navegação é direta.
 
 ## Do's and Don'ts
 
@@ -271,5 +284,5 @@ Prints reais dos apps em molduras de 32px com sombra Device. No hero, dois apare
 - **Don't** usar `transition-all`.
 - **Don't** usar a cor de um produto fora dos painéis de arte dele (títulos, CTAs, fundos de seção).
 - **Don't** recolorir, distorcer ou aplicar sombra ao logo; ele sai sempre de `components/ui/Logo.tsx`.
-- **Don't** usar `gold` em CTA ou em blocos grandes do portal; ele é detalhe. Painel de arte do TuneLab é a única exceção.
+- **Don't** usar `gold` em CTA ou em blocos grandes do portal; ele é detalhe. Cor de produto nova também precisa ser escura.
 - **Don't** criar raios de 12px ou 16px.

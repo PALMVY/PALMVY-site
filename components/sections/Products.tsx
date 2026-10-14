@@ -8,7 +8,7 @@ export function Products() {
   const otherOffset = featuredProduct ? 2 : 1;
 
   return (
-    <section id="produtos" className="relative px-4 pb-24 sm:px-6 sm:pb-36 lg:px-8">
+    <section id="produtos" className="relative px-4 pb-24 sm:px-6 sm:pb-32 lg:px-8">
       <div className="mx-auto max-w-6xl">
         <SectionHeader
           label="Produtos"

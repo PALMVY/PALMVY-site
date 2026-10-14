@@ -12,6 +12,7 @@
   --color-gold: #ffc857;
   --color-pacific-blue: #147d9a;
   --color-palm-green: #164a43;
+  --color-amber: #6b4413;
 
   /* Geist vem do next/font (app/layout.tsx); o resto é fallback de sistema. */
   --font-display: var(--font-geist-sans), -apple-system, BlinkMacSystemFont,
@@ -44,6 +45,20 @@ body {
   position: relative;
 }
 
+/* Títulos com linhas equilibradas e texto corrido sem palavra sozinha na última linha. */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p,
+li,
+dd,
+summary {
+  text-wrap: pretty;
+}
+
 ::selection {
   background-color: var(--color-sunset);
   color: var(--color-pacific-night);
@@ -52,6 +67,164 @@ body {
 :focus-visible {
   outline: 2px solid var(--color-sunset);
   outline-offset: 2px;
+}
+
+/*
+ * O momento de movimento do site: no hero, o risco laranja é desenhado
+ * sobre cada jargão, um depois do outro, e o termo apaga para `muted`.
+ * Roda uma vez ao abrir a página. O estado final é o mesmo do <Strike> estático.
+ */
+.strike-draw {
+  position: relative;
+  color: var(--color-muted);
+  text-decoration: none;
+  --strike-delay: calc(450ms + var(--strike-order, 0) * 220ms);
+  animation: strike-dim 400ms ease-out var(--strike-delay) both;
+}
+
+.strike-draw::after {
+  content: "";
+  position: absolute;
+  left: -0.1em;
+  right: -0.1em;
+  top: 52%;
+  height: 2px;
+  background-color: var(--color-sunset);
+  transform-origin: left center;
+  animation: strike-draw 520ms cubic-bezier(0.16, 1, 0.3, 1) var(--strike-delay) both;
+}
+
+@media (min-width: 640px) {
+  .strike-draw::after {
+    height: 3px;
+  }
+}
+
+@keyframes strike-draw {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes strike-dim {
+  from {
+    color: var(--color-cloud);
+  }
+}
+
+/*
+ * Preço em contador (PriceOdometer): a fita de 0 a 9 sobe até o dígito.
+ * As casas da esquerda saem primeiro, como um contador mecânico. Uma casa
+ * nova nasce rolando do zero (@starting-style).
+ */
+.odometer-strip {
+  transform: translateY(calc(var(--digit, 0) * -10%));
+  transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--column, 0) * 45ms);
+}
+
+@starting-style {
+  .odometer-strip {
+    transform: translateY(0);
+  }
+}
+
+/*
+ * A opção escolhida no orçamento se transforma na caixa da estimativa
+ * (QuotePicker). Só esse par anima; o resto da página troca sem fade.
+ */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+/* Cliques durante uma transição passam para a página (não ficam presos na camada). */
+::view-transition {
+  pointer-events: none;
+}
+
+/*
+ * Painel do produto que atravessa a navegação (ProductArtTransition): o
+ * painel do card na home cresce até o topo da landing. As imagens não
+ * esticam (cover), e um desfoque leve no meio do caminho esconde a troca
+ * entre o painel largo do card e o quadrado da landing.
+ */
+::view-transition-group(.morph) {
+  animation-duration: 560ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+::view-transition-image-pair(.morph) {
+  /* Recorta a imagem na moldura: o painel largo do card não vaza na viagem. */
+  overflow: clip;
+  border-radius: 24px;
+  animation: 560ms ease-out both morph-soften;
+}
+
+::view-transition-old(.morph),
+::view-transition-new(.morph) {
+  height: 100%;
+  object-fit: cover;
+}
+
+@keyframes morph-soften {
+  35% {
+    filter: blur(2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-image-pair(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+
+::view-transition-group(quote-pick) {
+  animation-duration: 480ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* A imagem da pílula some na hora: quem aparece é a caixa, crescendo do lugar dela. */
+::view-transition-old(quote-pick) {
+  animation: none;
+  opacity: 0;
+}
+
+::view-transition-new(quote-pick) {
+  animation: 320ms ease-out 80ms both quote-pick-in;
+}
+
+::view-transition-old(quote-pick),
+::view-transition-new(quote-pick) {
+  /* Sem esticar: a pílula e a caixa ficam no tamanho real e a moldura cresce em volta. */
+  height: 100%;
+  object-fit: none;
+  object-position: center;
+  overflow: clip;
+}
+
+@keyframes quote-pick-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .odometer-strip {
+    transition: none;
+  }
+}
+
+/* Movimento reduzido: o risco já aparece pronto, sem desenhar. */
+@media (prefers-reduced-motion: reduce) {
+  .strike-draw,
+  .strike-draw::after {
+    animation: none;
+  }
 }
 
 /* Grão sutil no fundo inteiro — quebra o "chapado" sem usar gradiente de cor */
