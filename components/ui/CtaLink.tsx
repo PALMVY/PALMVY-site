@@ -6,7 +6,8 @@ import {
   type ButtonVariant,
 } from '@/components/ui/buttonStyles';
 
-const BUTTON_LAYOUT = 'inline-flex items-center justify-center';
+// O alinhamento horizontal vem do tamanho (buttonStyles.ts).
+const BUTTON_LAYOUT = 'inline-flex items-center';
 
 type CtaLinkProps = {
   href: string;

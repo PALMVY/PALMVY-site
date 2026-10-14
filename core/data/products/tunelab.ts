@@ -22,6 +22,7 @@ export const tunelab: Product = {
   id: "tunelab",
   name: "TuneLab",
   tagline: "IA que entende seu carro",
+  category: "IA · Carros",
   description:
     "App mobile para entusiastas de carros. Analisa o veículo por fotos e texto e sugere tunagens de aparência e performance de forma educativa.",
   status: "coming-soon",
@@ -54,41 +55,49 @@ export const tunelab: Product = {
   ],
   faq: [
     {
+      topic: "O app",
       question: "O que é o TuneLab?",
       answer:
         "Um app mobile para entusiastas de carros. Você fotografa o veículo e a Mia, a IA do TuneLab, sugere modificações de aparência e performance de forma educativa.",
     },
     {
+      topic: "O app",
       question: "Para quem é o TuneLab?",
       answer:
         "Para entusiastas de carros em geral, de quem está começando a pensar em um projeto a quem já tem o carro modificado.",
     },
     {
+      topic: "O app",
       question: "Como a análise funciona?",
       answer:
         "Você tira fotos da frente, da lateral, da traseira e do motor e conta o que busca. A Mia usa isso para montar as sugestões para o seu carro.",
     },
     {
+      topic: "O app",
       question: "Preciso informar o modelo do carro?",
       answer:
         "Não, é opcional. Mas informar marca, modelo e ano deixa as peças sugeridas muito mais precisas.",
     },
     {
+      topic: "Limites e lançamento",
       question: "Os valores e os ganhos de potência são garantidos?",
       answer:
         "Não. São estimativas com objetivo educativo. Custos e resultados variam conforme o carro, as peças e a oficina, então confirme tudo com um profissional antes de qualquer modificação.",
     },
     {
+      topic: "Limites e lançamento",
       question: "As modificações sugeridas são legais?",
       answer:
         "Cada modificação precisa respeitar a legislação de trânsito em vigor. Antes de instalar qualquer peça, consulte um profissional e confirme as regras que valem para o seu carro.",
     },
     {
+      topic: "Limites e lançamento",
       question: "O TuneLab substitui a oficina ou o preparador?",
       answer:
         "Não. Ele ajuda você a entender as possibilidades e a chegar mais preparado à conversa com o profissional que vai fazer o trabalho.",
     },
     {
+      topic: "Limites e lançamento",
       question: "Quando o TuneLab chega?",
       answer:
         "Em breve. Se quiser ser avisado quando ele sair, chame a gente no WhatsApp.",

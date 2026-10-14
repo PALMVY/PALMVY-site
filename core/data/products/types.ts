@@ -24,6 +24,11 @@ export type ProductSpotlight = {
 };
 
 export type ProductFaq = {
+  /**
+   * Grupo da pergunta. Perguntas seguidas com o mesmo tópico aparecem juntas,
+   * com o tópico como subtítulo. Use quando a lista passar de quatro itens.
+   */
+  topic?: string;
   question: string;
   answer: string;
 };
@@ -32,6 +37,8 @@ export type Product = {
   id: string;
   name: string;
   tagline: string;
+  /** Área do produto, exibida no card da home (ex.: "Finanças · MEI"). */
+  category: string;
   description: string;
   status: "launched" | "coming-soon";
   platforms: ProductPlatform[];

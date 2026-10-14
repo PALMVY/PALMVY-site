@@ -6,6 +6,7 @@ export type NavLink = {
 // O prefixo "/" faz os links funcionarem também fora da home (ex.: landing pages).
 export const NAV_LINKS: readonly NavLink[] = [
   { href: '/#produtos', label: 'Produtos' },
-  { href: '/#filosofia', label: 'Filosofia' },
-  { href: '/#como-trabalhamos', label: 'Contato' },
+  { href: '/#sob-medida', label: 'Sob medida' },
+  { href: '/#como-trabalhamos', label: 'Como funciona' },
+  { href: '/#contato', label: 'Contato' },
 ];

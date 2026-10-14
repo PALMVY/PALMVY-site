@@ -1,44 +1,44 @@
 import { PhoneFrame } from "@/components/ui/PhoneFrame";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 import type { ProductStep } from "@/core/data/products";
+
+const formatPosition = (index: number): string =>
+  String(index + 1).padStart(2, "0");
 
 export function ProductSteps({ steps }: { steps: ProductStep[] }) {
   return (
     <section
       aria-labelledby="como-funciona-titulo"
-      className="relative py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border-t border-soft-gray/10"
+      className="border-t border-cloud/10 px-4 py-24 sm:px-6 sm:py-32 lg:px-8"
     >
-      <div className="max-w-6xl mx-auto">
-        <h2
-          id="como-funciona-titulo"
-          className="font-display text-3xl sm:text-4xl text-cloud mb-12 sm:mb-16"
-        >
-          Como funciona
-        </h2>
+      <div className="mx-auto max-w-6xl">
+        <SectionHeader
+          label="Como funciona"
+          title="Passo a passo."
+          titleId="como-funciona-titulo"
+        />
 
         <ol className="space-y-16 sm:space-y-24">
           {steps.map((step, index) => (
             <li
               key={step.title}
-              className="grid md:grid-cols-2 gap-8 md:gap-16 items-center"
+              className="grid items-center gap-8 md:grid-cols-2 md:gap-16"
             >
               <div className={index % 2 === 1 ? "md:order-2" : undefined}>
-                <p className="font-mono text-sm text-sunset mb-3">
-                  {String(index + 1).padStart(2, "0")}
+                <p className="mb-5 font-mono text-sm tracking-widest text-sunset">
+                  {formatPosition(index)}
                 </p>
-                <h3 className="font-display text-2xl sm:text-3xl text-cloud mb-4">
+                <h3 className="mb-3 text-2xl font-bold tracking-tight text-cloud sm:text-3xl">
                   {step.title}
                 </h3>
-                <p className="text-base text-soft-gray leading-relaxed max-w-md">
+                <p className="max-w-md text-lg leading-relaxed text-muted">
                   {step.description}
                 </p>
               </div>
 
-              <div className="relative h-96 overflow-hidden rounded-md border border-soft-gray/10 bg-pacific-deep">
+              <div className="relative h-96 overflow-hidden rounded-3xl border border-cloud/10 bg-pacific-deep">
                 <div className="absolute inset-x-0 top-8 mx-auto w-52">
-                  <PhoneFrame
-                    screenshot={step.screenshot}
-                    sizes="208px"
-                  />
+                  <PhoneFrame screenshot={step.screenshot} sizes="208px" />
                 </div>
               </div>
             </li>

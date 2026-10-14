@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PALMVY — Home (protótipo)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#071A2B}
+a{color:#F5F7F4}a:hover{color:#FF7A45}
+*{box-sizing:border-box}
+.pv-wrap{max-width:1200px;margin:0 auto;padding-left:48px;padding-right:48px}
+.pv-hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,0.85fr);gap:48px;align-items:center}
+.pv-h1{font-size:104px}
+.pv-featured{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0}
+.pv-duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.pv-sites{display:grid;grid-template-columns:minmax(0,0.9fr) minmax(0,1.1fr);gap:56px;align-items:start}
+.pv-process{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0}
+.pv-form{display:grid;grid-template-columns:minmax(0,0.85fr) minmax(0,1.15fr);gap:72px}
+.pv-navlinks{display:flex}
+.pv-row2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.pv-glass{background:rgba(245,247,244,0.035);border:1px solid rgba(245,247,244,0.10);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
+.pv-phone{border-radius:38px;padding:7px;background:#0B1118;border:1px solid rgba(245,247,244,0.16);box-shadow:0 40px 80px -24px rgba(0,0,0,0.65),0 0 0 1px rgba(0,0,0,0.4)}
+.pv-phone img{display:block;width:100%;height:auto;border-radius:31px}
+.pv-field{width:100%;background:rgba(7,26,43,0.6);border:1px solid rgba(245,247,244,0.14);color:#F5F7F4;font-family:Geist,sans-serif;font-size:16px;padding:16px 18px;border-radius:12px;outline:none;transition:border-color .15s ease}
+.pv-field::placeholder{color:#6F8392}
+.pv-field:focus-visible{border-color:#FF7A45;box-shadow:0 0 0 3px rgba(255,122,69,0.25)}
+.pv-chip{min-height:44px;padding:0 18px;border-radius:999px;font-family:'Geist Mono',monospace;font-size:13px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:background-color .15s ease,border-color .15s ease,color .15s ease}
+.pv-chip:focus-visible,.pv-cta:focus-visible,.pv-check:focus-visible,.pv-link:focus-visible{outline:2px solid #FF7A45;outline-offset:3px}
+.pv-cta{transition:transform .15s ease,background-color .15s ease}
+.pv-cta:hover{background:#E2673A !important}
+.pv-cta:active{transform:scale(.98)}
+.pv-card{transition:border-color .25s ease}
+.pv-card:hover{border-color:rgba(255,122,69,0.45)}
+.pv-card .pv-lift{transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.pv-card:hover .pv-lift{transform:translateY(-10px)}
+.pv-link{transition:gap .2s ease,background-color .15s ease}
+.pv-link:hover{gap:20px !important}
+.pv-strike{text-decoration:line-through;text-decoration-color:#FF7A45;text-decoration-thickness:3px;color:#8FA1AD}
+.pv-num{font-variant-numeric:tabular-nums}
+@media (prefers-reduced-motion:reduce){.pv-card .pv-lift,.pv-link{transition:none}.pv-card:hover .pv-lift{transform:none}}
+@media (max-width:1100px){.pv-h1{font-size:84px}.pv-featured{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:860px){.pv-hero,.pv-form,.pv-sites,.pv-duo{grid-template-columns:minmax(0,1fr)}.pv-navlinks{display:none}.pv-process{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:640px){.pv-wrap{padding-left:20px;padding-right:20px}.pv-h1{font-size:56px}.pv-row2{grid-template-columns:minmax(0,1fr)}.pv-incl{grid-template-columns:minmax(0,1fr) !important}}
+</style>
+<style>
+.pv-chip{background:transparent;color:#C7D1D8;border:1px solid rgba(245,247,244,0.18)}
+.pv-chip[aria-pressed="true"]{background:#FF7A45;color:#071A2B;border-color:#FF7A45}
+[hidden]{display:none !important}
+</style>
+</head>
+<body>
+<div style="font-family: Geist, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #C7D1D8; background: #071A2B; min-height: 100vh; position: relative; overflow: hidden">
+
+  <div aria-hidden="true" style="position: absolute; left: 50%; top: 260px; width: 1000px; height: 700px; transform: translateX(-5%); background: radial-gradient(closest-side, rgba(255,122,69,0.15), rgba(255,122,69,0) 70%); pointer-events: none"></div>
+  <div aria-hidden="true" style="position: absolute; inset: 0; background-image: linear-gradient(rgba(245,247,244,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(245,247,244,0.035) 1px, transparent 1px); background-size: 64px 64px; mask-image: linear-gradient(180deg, #000 0, transparent 1000px); -webkit-mask-image: linear-gradient(180deg, #000 0, transparent 1000px); pointer-events: none"></div>
+
+  <!-- NAV -->
+  <header style="position: relative; border-bottom: 1px solid rgba(245,247,244,0.08)">
+    <div class="pv-wrap" style="height: 80px; display: flex; align-items: center; justify-content: space-between; gap: 24px">
+      <a href="#topo" aria-label="PALMVY — início" style="display: flex; align-items: center; gap: 12px; text-decoration: none">
+        <svg width="30" height="30" viewBox="0 0 112 109" aria-hidden="true"><g transform="translate(-8 -7)"><path d="M12 24H40L64 65L88 24H116L64 112Z" fill="#F5F7F4"></path><path d="M64 54.11L45.20 22A21.56 21.56 0 0 1 82.80 22Z" fill="#FF7A45"></path></g></svg>
+        <span style="font-weight: 700; font-size: 18px; letter-spacing: 0.28em; color: #F5F7F4">PALMVY</span>
+      </a>
+      <nav aria-label="Principal" class="pv-navlinks" style="gap: 36px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase">
+        <a href="#produtos" style="text-decoration: none; color: #C7D1D8">Produtos</a>
+        <a href="#sob-medida" style="text-decoration: none; color: #C7D1D8">Sob medida</a>
+        <a href="#processo" style="text-decoration: none; color: #C7D1D8">Como funciona</a>
+        <a href="#contato" style="text-decoration: none; color: #C7D1D8">Contato</a>
+      </nav>
+      <a href="#produtos" style="display: flex; align-items: center; gap: 10px; min-height: 44px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #C7D1D8; text-decoration: none">
+        <span aria-hidden="true" style="width: 8px; height: 8px; background: #FF7A45; box-shadow: 0 0 12px rgba(255,122,69,0.8)"></span>
+        <span>3 apps em construção</span>
+      </a>
+    </div>
+  </header>
+
+  <main id="topo" style="position: relative">
+
+    <!-- HERO -->
+    <section class="pv-wrap" style="padding-top: 88px; padding-bottom: 120px">
+      <div class="pv-hero">
+        <div>
+          <p style="margin: 0 0 28px; font-family: 'Geist Mono', monospace; font-size: 14px; letter-spacing: 0.22em; color: #FF7A45">[ ESTÚDIO DE PRODUTO ]</p>
+          <h1 class="pv-h1" style="margin: 0; font-weight: 800; line-height: 0.92; letter-spacing: -0.045em; color: #F5F7F4; text-wrap: balance">Apps feitos com calma e <span style="color: #FF7A45">propósito.</span></h1>
+
+          <ul aria-label="O que a PALMVY não faz" style="list-style: none; margin: 44px 0 0; padding: 0; display: flex; flex-direction: column; gap: 12px; font-family: 'Geist Mono', monospace; font-size: 17px; letter-spacing: 0.04em; color: #F5F7F4">
+            <li style="display: flex; gap: 16px; align-items: baseline"><span aria-hidden="true" style="color: #FF7A45">—</span><span>Sem <span class="pv-strike">“experiências”</span>.</span></li>
+            <li style="display: flex; gap: 16px; align-items: baseline"><span aria-hidden="true" style="color: #FF7A45">—</span><span>Sem <span class="pv-strike">“soluções”</span> mágicas.</span></li>
+            <li style="display: flex; gap: 16px; align-items: baseline"><span aria-hidden="true" style="color: #FF7A45">—</span><span>Sem <span class="pv-strike">“manda DM”</span> pra saber o preço.</span></li>
+            <li style="display: flex; gap: 16px; align-items: baseline"><span aria-hidden="true" style="color: #FF7A45">—</span><span>Sem <span class="pv-strike">chatbot de IA</span> te atendendo.</span></li>
+          </ul>
+          <p style="margin: 28px 0 0; font-size: 19px; line-height: 1.55; color: #C7D1D8; max-width: 520px">A gente cria os próprios apps e faz apps e sites sob medida. <strong style="color: #F5F7F4; font-weight: 600">Com preço na mesa.</strong></p>
+
+          <div style="display: flex; flex-wrap: wrap; gap: 14px; margin-top: 40px">
+            <a href="#produtos" class="pv-cta" style="display: inline-flex; align-items: center; gap: 28px; min-height: 56px; padding: 0 26px; background: #FF7A45; color: #071A2B; text-decoration: none; font-weight: 700; font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase; border-radius: 12px">Ver produtos <span aria-hidden="true">→</span></a>
+            <a href="#sob-medida" class="pv-glass" style="display: inline-flex; align-items: center; min-height: 56px; padding: 0 26px; color: #F5F7F4; text-decoration: none; font-weight: 600; font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase; border-radius: 12px">Projeto sob medida</a>
+          </div>
+        </div>
+
+        <!-- Telas reais no lugar do globo -->
+        <div aria-hidden="true" style="position: relative; height: 620px">
+          <div class="pv-phone" style="position: absolute; width: 250px; right: 8px; top: 20px; transform: rotate(7deg); opacity: 0.9">
+            <img src="../../public/images/products/tunelab-app/garagem.webp" alt="">
+          </div>
+          <div class="pv-phone" style="position: absolute; width: 280px; left: 24px; top: 0; transform: rotate(-4deg)">
+            <img src="../../public/images/products/sossegue-app/painel.webp" alt="">
+          </div>
+          <div class="pv-glass" style="position: absolute; left: 0; bottom: 36px; border-radius: 14px; padding: 12px 16px; display: flex; align-items: center; gap: 10px; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #F5F7F4; background: rgba(7,26,43,0.75)">
+            <span style="width: 8px; height: 8px; border-radius: 999px; background: #147D9A"></span>SOSSEGUE
+          </div>
+          <div class="pv-glass" style="position: absolute; right: 0; bottom: 96px; border-radius: 14px; padding: 12px 16px; display: flex; align-items: center; gap: 10px; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #F5F7F4; background: rgba(7,26,43,0.75)">
+            <span style="width: 8px; height: 8px; border-radius: 999px; background: #FFC857"></span>TUNELAB
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUTOS -->
+    <section id="produtos" class="pv-wrap" style="padding-top: 24px; padding-bottom: 140px">
+      <div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; border-bottom: 1px solid rgba(245,247,244,0.10); padding-bottom: 28px; margin-bottom: 40px">
+        <div>
+          <p style="margin: 0 0 18px; font-family: 'Geist Mono', monospace; font-size: 13px; letter-spacing: 0.22em; color: #FF7A45">[ PRODUTOS ]</p>
+          <h2 style="margin: 0; font-size: 56px; line-height: 1; letter-spacing: -0.035em; font-weight: 700; color: #F5F7F4">Feitos em casa.</h2>
+        </div>
+        <p style="margin: 0; max-width: 400px; font-size: 17px; line-height: 1.55; color: #8FA1AD">Cada app nasce de um problema que a gente viu de perto. Nenhum é “solução em busca de problema”.</p>
+      </div>
+
+      <!-- 01 · SOSSEGUE (destaque) -->
+      <article class="pv-glass pv-card pv-featured" style="border-radius: 28px; overflow: hidden; margin-bottom: 20px">
+        <div style="padding: 48px; display: flex; flex-direction: column; gap: 28px">
+          <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap">
+            <span style="font-family: 'Geist Mono', monospace; font-size: 13px; letter-spacing: 0.18em; color: #FF7A45">01</span>
+            <span style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(245,247,244,0.14); font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #C7D1D8"><span style="width: 6px; height: 6px; border-radius: 999px; background: #FFC857"></span>EM BREVE</span>
+            <span style="font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #8FA1AD">FINANÇAS · MEI</span>
+          </div>
+          <div>
+            <h3 style="margin: 0 0 14px; font-size: 64px; line-height: 0.95; letter-spacing: -0.04em; font-weight: 800; color: #F5F7F4">Sossegue</h3>
+            <p style="margin: 0; font-size: 22px; line-height: 1.35; font-weight: 500; color: #F5F7F4; text-wrap: balance">Clareza e alívio para quem trabalha por conta.</p>
+          </div>
+          <p style="margin: 0; font-size: 16px; line-height: 1.65; color: #8FA1AD; max-width: 460px">Para MEIs e autônomos que sabem fazer o trabalho, mas carregam a ansiedade de não saber se o negócio está bem. Sem planilha e sem sistema chato.</p>
+          <ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; font-size: 15px; line-height: 1.5; color: #C7D1D8">
+            <li style="display: flex; gap: 12px"><span aria-hidden="true" style="color: #147D9A; font-family: 'Geist Mono', monospace">●</span>Painel calmo que mostra se o mês está sob controle</li>
+            <li style="display: flex; gap: 12px"><span aria-hidden="true" style="color: #147D9A; font-family: 'Geist Mono', monospace">●</span>Conversa por texto ou áudio, sem aprender sistema</li>
+            <li style="display: flex; gap: 12px"><span aria-hidden="true" style="color: #147D9A; font-family: 'Geist Mono', monospace">●</span>Clientes, cobranças e fôlego de caixa num lugar só</li>
+          </ul>
+          <div style="margin-top: auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; border-top: 1px solid rgba(245,247,244,0.08); padding-top: 22px">
+            <span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #8FA1AD">iOS · ANDROID</span>
+            <a href="/produtos/sossegue" class="pv-link" style="display: inline-flex; align-items: center; gap: 12px; min-height: 48px; padding: 0 20px; border-radius: 12px; background: #F5F7F4; color: #071A2B; text-decoration: none; font-family: 'Geist Mono', monospace; font-weight: 500; font-size: 12px; letter-spacing: 0.14em">CONHECER O SOSSEGUE <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+        <div aria-hidden="true" style="position: relative; min-height: 560px; background: #147D9A; overflow: hidden">
+          <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 55%; background-image: repeating-linear-gradient(180deg, rgba(245,247,244,0.16) 0 1px, transparent 1px 14px)"></div>
+          <div style="position: absolute; left: 50%; top: 40%; width: 360px; height: 360px; transform: translate(-50%, -50%); border-radius: 999px; background: radial-gradient(closest-side, rgba(245,247,244,0.28), rgba(245,247,244,0) 70%)"></div>
+          <div class="pv-lift" style="position: absolute; left: 50%; top: 56px; margin-left: -210px; width: 220px">
+            <div class="pv-phone" style="transform: rotate(-6deg)"><img src="../../public/images/products/sossegue-app/conversa.webp" alt=""></div>
+          </div>
+          <div class="pv-lift" style="position: absolute; left: 50%; top: 96px; margin-left: -20px; width: 240px">
+            <div class="pv-phone"><img src="../../public/images/products/sossegue-app/painel.webp" alt=""></div>
+          </div>
+        </div>
+      </article>
+
+      <div class="pv-duo">
+        <!-- 02 · TUNELAB -->
+        <article class="pv-glass pv-card" style="border-radius: 28px; overflow: hidden; display: flex; flex-direction: column">
+          <div aria-hidden="true" style="position: relative; height: 340px; background: #FFC857; overflow: hidden">
+            <div style="position: absolute; left: 0; right: 0; bottom: 0; height: 60%; background-image: repeating-linear-gradient(180deg, rgba(7,26,43,0.14) 0 1px, transparent 1px 14px)"></div>
+            <span style="position: absolute; left: 28px; top: 24px; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #071A2B">IA · CARROS</span>
+            <div class="pv-lift" style="position: absolute; left: 50%; top: 60px; margin-left: -175px; width: 170px">
+              <div class="pv-phone" style="transform: rotate(-5deg)"><img src="../../public/images/products/tunelab-app/escaneie.webp" alt=""></div>
+            </div>
+            <div class="pv-lift" style="position: absolute; left: 50%; top: 84px; margin-left: 5px; width: 180px">
+              <div class="pv-phone"><img src="../../public/images/products/tunelab-app/garagem.webp" alt=""></div>
+            </div>
+          </div>
+          <div style="padding: 36px; display: flex; flex-direction: column; gap: 20px; flex-grow: 1">
+            <div style="display: flex; align-items: center; gap: 14px">
+              <span style="font-family: 'Geist Mono', monospace; font-size: 13px; letter-spacing: 0.18em; color: #FF7A45">02</span>
+              <span style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(245,247,244,0.14); font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #C7D1D8"><span style="width: 6px; height: 6px; border-radius: 999px; background: #FFC857"></span>EM BREVE</span>
+            </div>
+            <div>
+              <h3 style="margin: 0 0 8px; font-size: 40px; line-height: 1; letter-spacing: -0.03em; font-weight: 800; color: #F5F7F4">TuneLab</h3>
+              <p style="margin: 0; font-size: 19px; font-weight: 500; color: #F5F7F4">IA que entende seu carro.</p>
+            </div>
+            <p style="margin: 0; font-size: 15px; line-height: 1.65; color: #8FA1AD">Fotografe o carro e a Mia sugere tunagens de aparência e performance, explicando o porquê de cada uma.</p>
+            <div style="margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; border-top: 1px solid rgba(245,247,244,0.08); padding-top: 20px">
+              <span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #8FA1AD">iOS · ANDROID</span>
+              <a href="/produtos/tunelab" class="pv-link" style="display: inline-flex; align-items: center; gap: 12px; min-height: 44px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-decoration: none; color: #F5F7F4">CONHECER <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </article>
+
+        <!-- 03 · SAFEZONE -->
+        <article class="pv-glass pv-card" style="border-radius: 28px; overflow: hidden; display: flex; flex-direction: column">
+          <div aria-hidden="true" style="position: relative; height: 340px; background: #164A43; overflow: hidden">
+            <span style="position: absolute; left: 28px; top: 24px; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #F5F7F4">SEGURANÇA · MAPA</span>
+            <svg class="pv-lift" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" style="position: absolute; inset: 0; width: 100%; height: 100%">
+              <g stroke="#F5F7F4" stroke-opacity="0.12" fill="none">
+                <path d="M-10 70 C80 60 120 110 210 96 S330 40 420 62"></path>
+                <path d="M-10 150 C70 140 150 180 230 160 S350 120 420 140"></path>
+                <path d="M-10 230 C90 220 160 250 250 236 S360 200 420 214"></path>
+                <path d="M90 -10 C100 80 70 160 96 310"></path>
+                <path d="M210 -10 C196 90 232 170 214 310"></path>
+                <path d="M320 -10 C330 100 300 190 322 310"></path>
+              </g>
+              <circle cx="150" cy="128" r="46" fill="#FF7A45" fill-opacity="0.16"></circle>
+              <circle cx="150" cy="128" r="22" fill="#FF7A45" fill-opacity="0.28"></circle>
+              <circle cx="150" cy="128" r="5" fill="#FF7A45"></circle>
+              <circle cx="286" cy="196" r="32" fill="#FFC857" fill-opacity="0.14"></circle>
+              <circle cx="286" cy="196" r="5" fill="#FFC857"></circle>
+              <circle cx="250" cy="96" r="4" fill="#F5F7F4" fill-opacity="0.6"></circle>
+              <circle cx="96" cy="222" r="4" fill="#F5F7F4" fill-opacity="0.6"></circle>
+            </svg>
+            <span style="position: absolute; right: 24px; bottom: 22px; padding: 8px 12px; border-radius: 10px; background: rgba(7,26,43,0.7); font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #F5F7F4">ILUSTRAÇÃO · TELAS EM BREVE</span>
+          </div>
+          <div style="padding: 36px; display: flex; flex-direction: column; gap: 20px; flex-grow: 1">
+            <div style="display: flex; align-items: center; gap: 14px">
+              <span style="font-family: 'Geist Mono', monospace; font-size: 13px; letter-spacing: 0.18em; color: #FF7A45">03</span>
+              <span style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(245,247,244,0.14); font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #C7D1D8"><span style="width: 6px; height: 6px; border-radius: 999px; background: #FFC857"></span>EM BREVE</span>
+            </div>
+            <div>
+              <h3 style="margin: 0 0 8px; font-size: 40px; line-height: 1; letter-spacing: -0.03em; font-weight: 800; color: #F5F7F4">SafeZone</h3>
+              <p style="margin: 0; font-size: 19px; font-weight: 500; color: #F5F7F4">Segurança pública com dados reais.</p>
+            </div>
+            <p style="margin: 0; font-size: 15px; line-height: 1.65; color: #8FA1AD">Mapa de áreas de risco com denúncias anônimas verificadas e moderação comunitária. Segurança de verdade, não achismo.</p>
+            <div style="margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; border-top: 1px solid rgba(245,247,244,0.08); padding-top: 20px">
+              <span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: #8FA1AD">iOS · ANDROID</span>
+              <a href="/produtos/safezone" class="pv-link" style="display: inline-flex; align-items: center; gap: 12px; min-height: 44px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-decoration: none; color: #F5F7F4">CONHECER <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SITES SOB MEDIDA -->
+    <section id="sob-medida" style="border-top: 1px solid rgba(245,247,244,0.08); padding-top: 120px; padding-bottom: 140px">
+      <div class="pv-wrap pv-sites">
+        <div>
+          <p style="margin: 0 0 18px; font-family: 'Geist Mono', monospace; font-size: 13px; letter-spacing: 0.22em; color: #FF7A45">[ SOB MEDIDA ]</p>
+          <h2 style="margin: 0; font-size: 56px; line-height: 1; letter-spacing: -0.035em; font-weight: 700; color: #F5F7F4">Precisa de um site ou app? O preço está aqui.</h2>
+          <p style="margin: 28px 0 0; font-size: 17px; line-height: 1.6; color: #8FA1AD; max-width: 440px">“A partir de” é o piso real, para o escopo descrito. Pediu mais, o escopo cresce e você vê o porquê, item por item, antes de fechar.</p>
+          <p style="margin: 28px 0 0; font-family: 'Geist Mono', monospace; font-size: 14px; line-height: 1.8; letter-spacing: 0.04em; color: #8FA1AD"><span class="pv-strike" style="text-decoration-thickness: 2px">Chama no direct para valores</span><br><span style="color: #FFC857">O piso está na tela. A conversa fecha o escopo.</span></p>
+        </div>
+
+        <div class="pv-glass" style="border-radius: 24px; padding: 36px">
+          <dl style="margin: 0; display: flex; flex-direction: column">
+            
+              <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; padding: 24px 0; border-bottom: 1px solid rgba(245,247,244,0.10)">
+                <dt>
+                  <span style="display: block; font-size: 22px; font-weight: 700; letter-spacing: -0.01em; color: #F5F7F4">Landing page</span>
+                  <span style="display: block; margin-top: 4px; font-size: 15px; color: #8FA1AD">Uma página, foco em conversão · 2–3 semanas</span>
+                </dt>
+                <dd style="margin: 0 0 0 auto; text-align: right">
+                  <span style="display: block; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #FF7A45">A PARTIR DE</span>
+                  <span class="pv-num" style="font-size: 34px; font-weight: 800; letter-spacing: -0.03em; color: #F5F7F4">R$ 2.900</span>
+                </dd>
+              </div>
+            
+              <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; padding: 24px 0; border-bottom: 1px solid rgba(245,247,244,0.10)">
+                <dt>
+                  <span style="display: block; font-size: 22px; font-weight: 700; letter-spacing: -0.01em; color: #F5F7F4">Site institucional</span>
+                  <span style="display: block; margin-top: 4px; font-size: 15px; color: #8FA1AD">Até 5 páginas · 3–5 semanas</span>
+                </dt>
+                <dd style="margin: 0 0 0 auto; text-align: right">
+                  <span style="display: block; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #FF7A45">A PARTIR DE</span>
+                  <span class="pv-num" style="font-size: 34px; font-weight: 800; letter-spacing: -0.03em; color: #F5F7F4">R$ 5.000</span>
+                </dd>
+              </div>
+            
+              <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; padding: 24px 0; border-bottom: 1px solid rgba(245,247,244,0.10)">
+                <dt>
+                  <span style="display: block; font-size: 22px; font-weight: 700; letter-spacing: -0.01em; color: #F5F7F4">App mobile</span>
+                  <span style="display: block; margin-top: 4px; font-size: 15px; color: #8FA1AD">iOS e Android, login e API · 8–14 semanas</span>
+                </dt>
+                <dd style="margin: 0 0 0 auto; text-align: right">
+                  <span style="display: block; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #FF7A45">A PARTIR DE</span>
+                  <span class="pv-num" style="font-size: 34px; font-weight: 800; letter-spacing: -0.03em; color: #F5F7F4">R$ 20.000</span>
+                </dd>
+              </div>
+            
+          </dl>
+          <p style="margin: 28px 0 14px; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: #8FA1AD">SEMPRE INCLUSO</p>
+          <ul class="pv-incl" style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 20px; font-size: 15px; line-height: 1.5; color: #C7D1D8">
+            <li style="display: flex; gap: 10px"><span aria-hidden="true" style="color: #FF7A45; font-family: 'Geist Mono', monospace">+</span>Design do zero, sem template</li>
+            <li style="display: flex; gap: 10px"><span aria-hidden="true" style="color: #FF7A45; font-family: 'Geist Mono', monospace">+</span>Rápido em qualquer tela</li>
+            <li style="display: flex; gap: 10px"><span aria-hidden="true" style="color: #FF7A45; font-family: 'Geist Mono', monospace">+</span>Publicado no seu domínio ou nas lojas</li>
+            <li style="display: flex; gap: 10px"><span aria-hidden="true" style="color: #FF7A45; font-family: 'Geist Mono', monospace">+</span>O código é seu</li>
+          </ul>
+          <a href="#contato" class="pv-cta" style="margin-top: 32px; display: flex; align-items: center; justify-content: space-between; min-height: 56px; padding: 0 24px; border-radius: 12px; background: #FF7A45; color: #071A2B; text-decoration: none; font-weight: 700; font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase">Começar projeto <span aria-hidden="true">→</span></a>
+          <p style="margin: 18px 0 0; font-size: 13px; line-height: 1.6; color: #8FA1AD">Hospedagem, domínio, contas nas lojas (Apple/Google) e serviços de terceiros são pagos direto por você, sem margem nossa.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMO FUNCIONA -->
+    <section id="processo" class="pv-wrap" style="padding-bottom: 140px">
+      <p style="margin: 0 0 18px; font-family: 'Geist Mono', monospace; font-size: 13px; letter-spacing: 0.22em; color: #FF7A45">[ COMO FUNCIONA ]</p>
+      <h2 style="margin: 0 0 20px; font-size: 56px; line-height: 1; letter-spacing: -0.035em; font-weight: 700; color: #F5F7F4">Três passos. Nenhum é reunião.</h2>
+      <p style="margin: 0 0 48px; font-family: 'Geist Mono', monospace; font-size: 15px; line-height: 1.8; color: #8FA1AD">Sem <span class="pv-strike" style="text-decoration-thickness: 2px">“transformação digital”</span>. Sem <span class="pv-strike" style="text-decoration-thickness: 2px">“vamos alinhar expectativas”</span>. Só o trabalho.</p>
+      <ol class="pv-process" style="list-style: none; margin: 0; padding: 0; border-top: 1px solid rgba(245,247,244,0.10)">
+        
+          <li style="padding: 32px 28px 8px 0; border-bottom: 1px solid rgba(245,247,244,0.10)">
+            <span style="display: block; font-family: 'Geist Mono', monospace; font-size: 13px; letter-spacing: 0.18em; color: #FF7A45; margin-bottom: 20px">01</span>
+            <h3 style="margin: 0 0 10px; font-size: 26px; font-weight: 700; letter-spacing: -0.02em; color: #F5F7F4">Você conta</h3>
+            <p style="margin: 0 0 28px; font-size: 15px; line-height: 1.6; color: #8FA1AD; max-width: 320px">O que precisa, do seu jeito. Pode ser resumido. Pode ser um áudio.</p>
+          </li>
+        
+          <li style="padding: 32px 28px 8px 0; border-bottom: 1px solid rgba(245,247,244,0.10)">
+            <span style="display: block; font-family: 'Geist Mono', monospace; font-size: 13px; letter-spacing: 0.18em; color: #FF7A45; margin-bottom: 20px">02</span>
+            <h3 style="margin: 0 0 10px; font-size: 26px; font-weight: 700; letter-spacing: -0.02em; color: #F5F7F4">A gente fecha</h3>
+            <p style="margin: 0 0 28px; font-size: 15px; line-height: 1.6; color: #8FA1AD; max-width: 320px">Escopo claro, prazo e preço fechado, por escrito. Sem letra miúda.</p>
+          </li>
+        
+          <li style="padding: 32px 28px 8px 0; border-bottom: 1px solid rgba(245,247,244,0.10)">
+            <span style="display: block; font-family: 'Geist Mono', monospace; font-size: 13px; letter-spacing: 0.18em; color: #FF7A45; margin-bottom: 20px">03</span>
+            <h3 style="margin: 0 0 10px; font-size: 26px; font-weight: 700; letter-spacing: -0.02em; color: #F5F7F4">Fechou, começa</h3>
+            <p style="margin: 0 0 28px; font-size: 15px; line-height: 1.6; color: #8FA1AD; max-width: 320px">Você acompanha cada entrega. No fim, recebe funcionando.</p>
+          </li>
+        
+      </ol>
+    </section>
+
+    <!-- CONTATO -->
+    <section id="contato" style="border-top: 1px solid rgba(245,247,244,0.08); padding-top: 120px; padding-bottom: 140px">
+      <div class="pv-wrap pv-form">
+        <div>
+          <p style="margin: 0 0 18px; font-family: 'Geist Mono', monospace; font-size: 13px; letter-spacing: 0.22em; color: #FF7A45">[ NOVO PROJETO ]</p>
+          <h2 style="margin: 0; font-size: 64px; line-height: 0.95; letter-spacing: -0.04em; font-weight: 800; color: #F5F7F4">Quer começar? Manda o que você precisa.</h2>
+          <p style="margin: 28px 0 0; font-size: 18px; line-height: 1.6; color: #8FA1AD; max-width: 420px">Quem responde é quem vai construir. Você recebe escopo, prazo e preço fechado, por escrito.</p>
+          <div style="margin-top: 40px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.14em">
+            <a href="mailto:hello@palmvy.com.br" style="text-decoration: none; color: #C7D1D8">→ HELLO@PALMVY.COM.BR</a>
+          </div>
+        </div>
+
+        <form class="pv-glass" style="border-radius: 24px; padding: 40px; display: flex; flex-direction: column; gap: 36px" id="pv-form">
+          <fieldset style="border: 0; margin: 0; padding: 0">
+            <legend style="padding: 0; margin-bottom: 16px; display: flex; align-items: baseline; gap: 14px">
+              <span style="font-family: 'Geist Mono', monospace; font-size: 13px; color: #8FA1AD">01</span>
+              <span style="font-size: 20px; font-weight: 600; color: #F5F7F4">O que vamos construir?</span>
+            </legend>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px">
+              <button type="button" class="pv-chip" data-kind="landing" aria-pressed="true">Landing page</button>
+<button type="button" class="pv-chip" data-kind="site" aria-pressed="false">Site institucional</button>
+<button type="button" class="pv-chip" data-kind="app" aria-pressed="false">App mobile</button>
+<button type="button" class="pv-chip" data-kind="other" aria-pressed="false">Ainda não sei</button>
+            </div>
+
+            <div aria-live="polite" style="margin-top: 16px; border-radius: 14px; padding: 18px 20px; border: 1px dashed rgba(255,122,69,0.45); background: rgba(255,122,69,0.06)">
+              <div id="pv-est-known">
+                <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px">
+                  <span style="font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #FF7A45">ESTIMATIVA · <span id="pv-est-name">LANDING PAGE</span></span>
+                  <span class="pv-num" style="font-size: 18px; color: #F5F7F4"><span style="color: #8FA1AD">a partir de</span> <strong style="font-weight: 700"><span id="pv-est-from">R$ 2.900</span></strong></span>
+                </div>
+              </div>
+              <div id="pv-est-unknown" hidden>
+                <span style="font-size: 16px; line-height: 1.5; color: #F5F7F4">Sem problema. A gente te ajuda a decidir, sem cobrar pela conversa.</span>
+              </div>
+            </div>
+          </fieldset>
+
+          <div>
+            <label for="pv-desc" style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 8px">
+              <span style="font-family: 'Geist Mono', monospace; font-size: 13px; color: #8FA1AD">02</span>
+              <span style="font-size: 20px; font-weight: 600; color: #F5F7F4">Descreva a ideia</span>
+            </label>
+            <p id="pv-desc-help" style="margin: 0 0 14px 34px; font-size: 15px; color: #8FA1AD">Problema, público e o que já existe. Links ajudam.</p>
+            <textarea id="pv-desc" class="pv-field" rows="5" aria-describedby="pv-desc-help" placeholder="Quero um app que…" style="resize: vertical; min-height: 140px"></textarea>
+          </div>
+
+          <div class="pv-row2">
+            <div>
+              <label for="pv-when" style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 14px">
+                <span style="font-family: 'Geist Mono', monospace; font-size: 13px; color: #8FA1AD">03</span>
+                <span style="font-size: 20px; font-weight: 600; color: #F5F7F4">Prazo</span>
+                <span style="font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.16em; color: #6F8392">OPCIONAL</span>
+              </label>
+              <select id="pv-when" class="pv-field" style="appearance: none; -webkit-appearance: none">
+                <option>Sem pressa</option>
+                <option>1 a 3 meses</option>
+                <option>Menos de 1 mês</option>
+              </select>
+            </div>
+            <div>
+              <label for="pv-contact" style="display: flex; align-items: baseline; gap: 14px; margin-bottom: 14px">
+                <span style="font-family: 'Geist Mono', monospace; font-size: 13px; color: #8FA1AD">04</span>
+                <span style="font-size: 20px; font-weight: 600; color: #F5F7F4">Seu e-mail</span>
+              </label>
+              <input id="pv-contact" class="pv-field" type="email" autocomplete="email" required="" placeholder="voce@empresa.com">
+            </div>
+          </div>
+
+          <label style="display: flex; align-items: flex-start; gap: 14px; font-size: 15px; line-height: 1.5; color: #C7D1D8; cursor: pointer">
+            <input type="checkbox" class="pv-check" required="" style="width: 22px; height: 22px; margin: 1px 0 0; accent-color: #FF7A45; flex-shrink: 0">
+            <span>Li e aceito os <a href="/termos">termos de uso</a> e a <a href="/privacidade">política de privacidade</a>.</span>
+          </label>
+
+          <div id="pv-sent" hidden>
+            <p role="status" style="margin: 0; padding: 16px 18px; border-radius: 12px; border: 1px solid rgba(255,200,87,0.4); background: rgba(255,200,87,0.08); color: #FFC857; font-family: 'Geist Mono', monospace; font-size: 13px; letter-spacing: 0.1em">✓ RECEBIDO. UMA PESSOA VAI TE RESPONDER.</p>
+          </div>
+
+          <button type="submit" class="pv-cta" style="display: flex; align-items: center; justify-content: space-between; min-height: 64px; padding: 0 28px; border: 0; border-radius: 14px; background: #FF7A45; color: #071A2B; font-family: Geist, sans-serif; font-weight: 800; font-size: 16px; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer">Enviar <span aria-hidden="true">→</span></button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer style="position: relative; border-top: 1px solid rgba(245,247,244,0.08)">
+    <div class="pv-wrap" style="padding-top: 40px; padding-bottom: 48px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 24px; font-family: 'Geist Mono', monospace; font-size: 12px; letter-spacing: 0.16em; color: #8FA1AD">
+      <span>PALMVY © 2026 · DREAM → DESIGN → BUILD → SHIP</span>
+      <nav aria-label="Rodapé" style="display: flex; flex-wrap: wrap; gap: 28px">
+        <a href="/privacidade" style="text-decoration: none; color: #C7D1D8">PRIVACIDADE</a>
+        <a href="/termos" style="text-decoration: none; color: #C7D1D8">TERMOS</a>
+        <a href="mailto:hello@palmvy.com.br" style="text-decoration: none; color: #C7D1D8">hello@palmvy.com.br</a>
+      </nav>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var PRICES = {"landing": ["LANDING PAGE", "R$ 2.900"], "site": ["SITE INSTITUCIONAL", "R$ 5.000"], "app": ["APP MOBILE", "R$ 20.000"]};
+  var chips = document.querySelectorAll('.pv-chip');
+  var known = document.getElementById('pv-est-known');
+  var unknown = document.getElementById('pv-est-unknown');
+  chips.forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      chips.forEach(function (c) { c.setAttribute('aria-pressed', c === chip ? 'true' : 'false'); });
+      var p = PRICES[chip.dataset.kind];
+      known.hidden = !p;
+      unknown.hidden = !!p;
+      if (p) {
+        document.getElementById('pv-est-name').textContent = p[0];
+        document.getElementById('pv-est-from').textContent = p[1];
+      }
+    });
+  });
+  // Protótipo: não envia nada. No site real isso vira Server Action com validação no servidor.
+  document.getElementById('pv-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    document.getElementById('pv-sent').hidden = false;
+  });
+})();
+</script>
+</body>
+</html>

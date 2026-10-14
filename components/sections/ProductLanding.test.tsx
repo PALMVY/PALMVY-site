@@ -1,7 +1,9 @@
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
 import { ProductLanding } from '@/components/sections/ProductLanding';
+import { getProductContactLink } from '@/core/data/contact';
 import { products } from '@/core/data/products';
+import { groupFaqByTopic } from '@/components/sections/ProductFaq';
 
 const renderLanding = (productId: string): string => {
   const product = products.find(({ id }) => id === productId);
@@ -82,6 +84,48 @@ describe('ProductLanding do TuneLab', () => {
     expect(images.length).toBeGreaterThan(0);
     for (const image of images) {
       expect(image).toMatch(/\balt="[^"]+"/);
+    }
+  });
+});
+
+describe('ProductLanding: perguntas agrupadas', () => {
+  it('junta perguntas seguidas do mesmo tópico, na ordem dos dados', () => {
+    const groups = groupFaqByTopic([
+      { topic: 'A', question: '1', answer: '' },
+      { topic: 'A', question: '2', answer: '' },
+      { topic: 'B', question: '3', answer: '' },
+      { question: '4', answer: '' },
+    ]);
+
+    expect(groups.map(({ topic, items }) => [topic, items.length])).toEqual([
+      ['A', 2],
+      ['B', 1],
+      [undefined, 1],
+    ]);
+  });
+
+  it('mostra cada tópico do Sossegue com no máximo quatro perguntas', () => {
+    const html = renderLanding('sossegue');
+    const sossegue = products.find(({ id }) => id === 'sossegue');
+    const groups = groupFaqByTopic(sossegue?.faq ?? []);
+
+    expect(groups.length).toBeGreaterThan(1);
+    for (const { topic, items } of groups) {
+      expect(html).toContain(`>${topic}</h3>`);
+      expect(items.length).toBeLessThanOrEqual(4);
+    }
+  });
+});
+
+describe('ProductLanding: texto de contato', () => {
+  it('não promete WhatsApp quando o botão leva para outro canal', () => {
+    for (const product of products) {
+      const html = renderToStaticMarkup(<ProductLanding product={product} />);
+      const href = getProductContactLink(product).href;
+      const promisesWhatsApp = html.includes('acontece no WhatsApp');
+
+      expect(promisesWhatsApp).toBe(href.startsWith('https://wa.me/'));
+      expect(href.startsWith('/')).toBe(false);
     }
   });
 });

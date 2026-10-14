@@ -9,7 +9,7 @@ export function Navbar() {
   return (
     <nav className="fixed top-0 z-50 w-full bg-pacific-night/90 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <Link href="/" className="inline-flex items-center">
+        <Link href="/" className="inline-flex min-h-11 items-center">
           <Logo variant="horizontal" size="sm" />
         </Link>
 
@@ -18,7 +18,7 @@ export function Navbar() {
             <Link
               key={href}
               href={href}
-              className="text-sm text-soft-gray transition-colors hover:text-cloud"
+              className="inline-flex min-h-11 items-center text-sm text-soft-gray transition-colors hover:text-cloud motion-reduce:transition-none"
             >
               {label}
             </Link>
@@ -26,10 +26,11 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-2">
+          {/* Contorno, não sólido: o laranja sólido fica com o CTA da página (One Sun Rule). */}
           <CtaLink
             href={CONTACT_LINK.href}
             isExternal={CONTACT_LINK.isExternal}
-            className="hidden rounded-md bg-sunset px-4 py-2 text-sm font-medium text-pacific-night transition-colors hover:bg-sunset-dark sm:inline-flex"
+            className="hidden h-11 items-center rounded-md border border-sunset/60 px-4 text-sm font-medium text-cloud transition-colors hover:bg-sunset hover:text-pacific-night motion-reduce:transition-none sm:inline-flex"
           >
             Vamos conversar?
           </CtaLink>

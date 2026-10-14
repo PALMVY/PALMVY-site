@@ -1,98 +1,38 @@
-"use client";
-
-import { Card } from "@/components/ui/Card";
-import { CtaLink } from "@/components/ui/CtaLink";
-import { ProductVisual } from "@/components/ui/ProductVisual";
-import { StatusBadge } from "@/components/ui/StatusBadge";
+import { ProductCard } from "@/components/ui/ProductCard";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 import { products } from "@/core/data/products";
 
 export function Products() {
-  const featuredProduct = products.find((p) => p.featured);
-  const otherProducts = products.filter((p) => !p.featured);
+  const featuredProduct = products.find((product) => product.featured);
+  const otherProducts = products.filter((product) => !product.featured);
+  const otherOffset = featuredProduct ? 2 : 1;
 
   return (
-    <section
-      id="produtos"
-      className="relative py-20 sm:py-32 px-4 sm:px-6 lg:px-8"
-    >
-      <div className="max-w-6xl mx-auto">
-        <div className="mb-16 max-w-2xl">
-          <h2 className="font-display text-4xl sm:text-5xl text-cloud mb-4">
-            Nossos produtos
-          </h2>
-          <p className="text-lg text-muted">
-            Aplicativos para facilitar sua vida.
-          </p>
-        </div>
+    <section id="produtos" className="relative px-4 pb-24 sm:px-6 sm:pb-36 lg:px-8">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeader
+          label="Produtos"
+          title="Feitos em casa."
+          aside="Cada app nasce de um problema que a gente viu de perto. Nenhum é “solução em busca de problema”."
+        />
 
         {featuredProduct && (
-          <div className="mb-16">
-            <Card interactive className="p-0 overflow-hidden">
-              <div className="grid md:grid-cols-2">
-                <div className="flex flex-col justify-center p-8 sm:p-12">
-                  <h3 className="font-display text-3xl sm:text-4xl text-cloud mb-2">
-                    {featuredProduct.name}
-                  </h3>
-                  <p className="text-lg text-muted mb-6">
-                    {featuredProduct.tagline}
-                  </p>
-                  <p className="text-base text-soft-gray mb-8 leading-relaxed">
-                    {featuredProduct.description}
-                  </p>
-                  <div className="flex flex-wrap items-center gap-4">
-                    <StatusBadge status={featuredProduct.status} />
-                    {featuredProduct.landingPage && (
-                      <CtaLink
-                        href={featuredProduct.landingPage}
-                        isExternal={false}
-                        variant="primary"
-                        size="md"
-                      >
-                        Conhecer
-                      </CtaLink>
-                    )}
-                  </div>
-                </div>
-
-                <ProductVisual
-                  product={featuredProduct}
-                  className="hidden md:flex h-full min-h-96"
-                />
-              </div>
-            </Card>
+          <div className="mb-5">
+            <ProductCard product={featuredProduct} position={1} featured />
           </div>
         )}
 
-        <div className="grid md:grid-cols-2 gap-6">
-          {otherProducts.map((product) => (
-            <Card key={product.id} interactive className="p-0 overflow-hidden">
-              <ProductVisual product={product} className="h-48" />
-              <div className="p-8">
-                <h3 className="text-2xl text-cloud mb-2 font-medium">
-                  {product.name}
-                </h3>
-                <p className="text-sm text-muted mb-4">{product.tagline}</p>
-                <p className="text-sm text-soft-gray mb-6 leading-relaxed">
-                  {product.description}
-                </p>
-
-                <div className="flex flex-wrap items-center gap-4">
-                  <StatusBadge status={product.status} />
-                  {product.landingPage && (
-                    <CtaLink
-                      href={product.landingPage}
-                      isExternal={false}
-                      variant="secondary"
-                      size="sm"
-                    >
-                      Conhecer
-                    </CtaLink>
-                  )}
-                </div>
-              </div>
-            </Card>
-          ))}
-        </div>
+        {otherProducts.length > 0 && (
+          <div className="grid gap-5 md:grid-cols-2">
+            {otherProducts.map((product, index) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                position={index + otherOffset}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

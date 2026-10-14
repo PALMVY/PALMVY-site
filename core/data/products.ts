@@ -34,20 +34,3 @@ export const getLandingSlugs = (): string[] =>
       ? [product.landingPage.slice(LANDING_ROUTE_BASE.length + 1)]
       : [],
   );
-
-export const philosophyPillars = [
-  {
-    title: "Design com propósito",
-    description:
-      "Cada pixel tem razão de ser. Interfaces calmas que não gritam.",
-  },
-  {
-    title: "Código feito com calma",
-    description: "Performance, tipagem e manutenibilidade antes de tudo.",
-  },
-  {
-    title: "Impacto real",
-    description:
-      "Apps que resolvem problemas de verdade, não soluções em busca de problema.",
-  },
-];

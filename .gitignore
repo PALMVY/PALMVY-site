@@ -1,16 +1,35 @@
-node_modules
-.next
-out
-next-env.d.ts
+# Dependências e build
+/node_modules
+/.next/
+/out/
+/build
+/coverage
 *.tsbuildinfo
+next-env.d.ts
 
 # Segredos e variáveis de ambiente: nunca versionar
 .env*
 !.env.example
 
-.DS_Store
+# Vercel
+.vercel
 
-//outras coisas
-app/privacidade
-produtos
-termos
+# Logs
+npm-debug.log*
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# Ferramentas de IA e skills (configuração local, ~21 MB por pasta)
+.agents/
+.claude/
+.codex/
+.cursor/
+.impeccable/
+.playwright-mcp/
+
+# Documentos internos: o repositório é público e a marca é anônima
+CLAUDE.md
+DESIGN.md
+PRODUCT.md

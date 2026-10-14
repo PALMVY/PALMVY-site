@@ -37,6 +37,7 @@ export const sossegue: Product = {
   id: "sossegue",
   name: "Sossegue",
   tagline: "Clareza e alívio para quem trabalha por conta",
+  category: "Finanças · MEI",
   description:
     "Feito para MEIs e autônomos que sabem fazer o trabalho, mas carregam a ansiedade de não saber se o negócio está bem. O Sossegue mostra, de forma humana, o que importa, sem planilha e sem sistema chato.",
   status: "coming-soon",
@@ -87,56 +88,67 @@ export const sossegue: Product = {
   },
   faq: [
     {
+      topic: "O app",
       question: "O que é o Sossegue?",
       answer:
         "É o painel de paz do seu negócio. Ele mostra, de forma simples e humana, como está o seu mês, quem precisa de atenção e quantos dias de fôlego você ainda tem — sem planilha e sem você precisar virar administrador.",
     },
     {
+      topic: "O app",
       question: "Para quem é o Sossegue?",
       answer:
         "Para MEIs, autônomos e prestadores de serviço que sabem fazer o trabalho, mas carregam a ansiedade de não saber se o negócio está bem.",
     },
     {
+      topic: "O app",
       question: "É mais um controle financeiro?",
       answer:
         "Não. A maioria dos apps organiza gastos pessoais (iFood, Uber, contas da casa). O Sossegue existe para uma dor diferente: a clareza e o alívio em relação ao seu negócio (clientes, valores a receber e fôlego).",
     },
     {
+      topic: "O app",
       question: "Preciso entender de tecnologia ou sistema?",
       answer:
         "Não. A ideia é exatamente o contrário. Você conversa naturalmente (por texto ou áudio) e o painel te devolve a informação de forma calma e clara.",
     },
     {
+      topic: "No dia a dia",
       question: "Como funciona a conversa?",
       answer:
         "Você fala do jeito que fala no dia a dia, por exemplo: “Atendi a Carla hoje, R$180, ela vai pagar na sexta”, “Recebi os 180 da Juliana” ou “O Pedro tá devendo faz tempo”. O Sossegue organiza e atualiza o painel.",
     },
     {
+      topic: "No dia a dia",
       question: "O que é o Fôlego de Caixa?",
       answer:
         "É o número de dias que o seu negócio se sustenta sem novas entradas. Você vê esse número no painel, junto com o que entrou no mês e o que ainda falta receber.",
     },
     {
+      topic: "No dia a dia",
       question: "Vai funcionar pelo WhatsApp?",
       answer:
         "Na fase inicial a conversa pode acontecer pelo WhatsApp para facilitar. O coração do produto, porém, é o painel calmo — a experiência principal de clareza e alívio.",
     },
     {
+      topic: "No dia a dia",
       question: "O Sossegue emite nota fiscal?",
       answer:
         "No começo não. O foco do MVP é tirar o peso da cabeça: visão do negócio, clientes, cobranças e fôlego. Emissão de nota e integrações mais pesadas ficam para depois.",
     },
     {
+      topic: "Lançamento",
       question: "Quando vai ficar pronto?",
       answer:
         "Estamos construindo com calma e cuidado. Deixe seu interesse pelo botão “Quero ser avisado” que a gente te avisa assim que estiver disponível.",
     },
     {
+      topic: "Lançamento",
       question: "Meus dados ficam seguros?",
       answer:
         "Tratamos seus dados com cuidado, não os vendemos e explicamos tudo na nossa Política de Privacidade.",
     },
     {
+      topic: "Lançamento",
       question: "Tem custo?",
       answer:
         "Ainda estamos definindo. Quem entrar na lista de interessados será avisado com antecedência.",

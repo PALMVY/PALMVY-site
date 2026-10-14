@@ -1,7 +1,7 @@
 # Architecture Decision Records (ADR) & System Guidelines
 **Projeto:** PALMVY — Portal principal & ecossistema de produtos
 **Autor:** Sam Campos Almeida
-**Propriedade de:** PALMVY (anteriormente West Sunset Labs)
+**Propriedade de:** PALMVY
 **Licença:** All Rights Reserved (Proprietary)
 **Última revisão:** 2026-10-01
 
@@ -71,7 +71,8 @@ Este documento dita as regras arquiteturais, visuais e de governança do portal 
 
 ## 6. Contato e conversão
 - O destino principal dos CTAs é o **WhatsApp**, definido em `core/data/contact.ts` a partir da variável `NEXT_PUBLIC_WHATSAPP_NUMBER` (país + DDD + número, só dígitos).
-- Sem número válido, o CTA leva à seção `/#como-trabalhamos` da home. A validação é feita em `buildContactLink`. Cada landing usa uma mensagem própria (`getProductContactLink`).
+- Sem número válido, a validação em `buildContactLink` aplica um fallback por contexto: o contato geral (Navbar) leva à seção `/#contato` da home; orçamento (`getQuoteContactLink`) e landings de produto (`getProductContactLink`) caem em `mailto:` com a mesma mensagem, para a pessoa não perder o contexto. Cada landing usa uma mensagem própria.
+- O texto de apoio dos CTAs segue o destino real do link (`getContactChannel`): nunca prometa WhatsApp quando o botão abre e-mail.
 - Links externos usam sempre `target="_blank"` com `rel="noopener noreferrer"` (o `CtaLink` já faz isso).
 - Para publicar, cadastre a mesma variável no painel do serviço de hospedagem. Sem ela, o botão em produção cai no fallback.
 

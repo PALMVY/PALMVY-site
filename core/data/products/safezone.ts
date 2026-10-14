@@ -4,6 +4,7 @@ export const safezone: Product = {
   id: "safezone",
   name: "SafeZone",
   tagline: "Segurança pública com dados reais",
+  category: "Segurança · Mapa",
   description:
     "App que mapeia áreas de risco com denúncias anônimas verificadas. Duas camadas de acesso, verificação rigorosa e moderação comunitária — segurança de verdade, não achismo.",
   status: "coming-soon",

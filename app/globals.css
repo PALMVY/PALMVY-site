@@ -24,6 +24,9 @@
 
 html {
   scroll-behavior: smooth;
+  /* Controles nativos e barra de rolagem no tema escuro da marca. */
+  color-scheme: dark;
+  scrollbar-color: var(--color-muted) var(--color-pacific-night);
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -13,8 +13,10 @@ export function ProductVisual({
 }) {
   const lineColor =
     product.tone === "light" ? "text-pacific-night/20" : "text-cloud/15";
-  const emptyTextColor =
-    product.tone === "light" ? "text-pacific-night/60" : "text-cloud/60";
+  const nameColor =
+    product.tone === "light" ? "text-pacific-night" : "text-cloud";
+  const noteColor =
+    product.tone === "light" ? "text-pacific-night/80" : "text-cloud/80";
 
   return (
     <div
@@ -37,11 +39,20 @@ export function ProductVisual({
           />
         </div>
       ) : (
-        <p
-          className={`relative z-10 font-mono text-sm ${emptyTextColor}`}
-        >
-          Em breve
-        </p>
+        // Sem logo nem telas: o nome vira a arte. O texto repete o título da
+        // página, então fica fora do leitor de tela.
+        <div aria-hidden="true" className="relative z-10 px-6 text-center">
+          <p
+            className={`font-display text-5xl font-extrabold leading-none tracking-tighter sm:text-6xl ${nameColor}`}
+          >
+            {product.name}
+          </p>
+          <p
+            className={`mt-4 font-mono text-xs uppercase tracking-widest ${noteColor}`}
+          >
+            [ Em desenvolvimento ]
+          </p>
+        </div>
       )}
     </div>
   );

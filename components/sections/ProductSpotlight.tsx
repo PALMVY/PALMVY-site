@@ -1,4 +1,5 @@
 import { PhoneStage } from "@/components/ui/PhoneStage";
+import { SectionLabel } from "@/components/ui/SectionLabel";
 import type { Product, ProductSpotlight as Spotlight } from "@/core/data/products";
 
 type ProductSpotlightProps = {
@@ -15,7 +16,7 @@ export function ProductSpotlight({
   return (
     <section
       aria-labelledby="spotlight-titulo"
-      className="relative py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border-t border-soft-gray/10"
+      className="border-t border-cloud/10 px-4 py-24 sm:px-6 sm:py-32 lg:px-8"
     >
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 md:gap-16 items-center">
         <PhoneStage
@@ -25,13 +26,14 @@ export function ProductSpotlight({
         />
 
         <div>
+          <SectionLabel className="mb-4">Em detalhe</SectionLabel>
           <h2
             id="spotlight-titulo"
-            className="font-display text-3xl sm:text-4xl text-cloud mb-4"
+            className="mb-6 text-balance font-display text-4xl font-bold leading-none tracking-tight text-cloud sm:text-5xl"
           >
             {spotlight.title}
           </h2>
-          <p className="text-base text-soft-gray leading-relaxed mb-8 max-w-md">
+          <p className="mb-8 max-w-md text-lg leading-relaxed text-muted">
             {spotlight.description}
           </p>
           <ul className="space-y-4">
