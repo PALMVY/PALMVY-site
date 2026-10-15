@@ -1,49 +1,98 @@
+import { HorizonLines } from "@/components/ui/HorizonLines";
 import { PhoneFrame } from "@/components/ui/PhoneFrame";
-import type { ProductStep } from "@/core/data/products";
+import { SectionHeader } from "@/components/ui/SectionHeader";
+import type { Product, ProductStep } from "@/core/data/products";
 
-export function ProductSteps({ steps }: { steps: ProductStep[] }) {
+type ProductStepsProps = {
+  steps: ProductStep[];
+  accentColor: Product["accentColor"];
+  tone: Product["tone"];
+};
+
+const formatPosition = (index: number): string =>
+  String(index + 1).padStart(2, "0");
+
+// Classes estáticas: o Tailwind não enxerga nomes montados em tempo de execução.
+const COLUMNS_BY_COUNT: Record<number, string> = {
+  1: "lg:grid-cols-1",
+  2: "lg:grid-cols-2",
+  3: "lg:grid-cols-3",
+  4: "lg:grid-cols-4",
+};
+
+/**
+ * O pico da landing: os celulares sobem de uma faixa só, na cor do produto.
+ * A partir de `lg` a faixa é um fundo contínuo atrás das colunas. No tablet
+ * (`md`) três colunas não cabem o aparelho, então cada passo vira uma linha
+ * com painel e texto lado a lado. No celular, cada passo tem o próprio painel.
+ */
+export function ProductSteps({ steps, accentColor, tone }: ProductStepsProps) {
+  const lineColor = tone === "light" ? "text-pacific-night/20" : "text-cloud/15";
+  const columns = COLUMNS_BY_COUNT[steps.length] ?? "lg:grid-cols-3";
+  const total = formatPosition(steps.length - 1);
+
   return (
     <section
       aria-labelledby="como-funciona-titulo"
-      className="relative py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border-t border-soft-gray/10"
+      className="border-t border-cloud/10 px-4 py-24 sm:px-6 sm:py-32 lg:px-8"
     >
-      <div className="max-w-6xl mx-auto">
-        <h2
-          id="como-funciona-titulo"
-          className="font-display text-3xl sm:text-4xl text-cloud mb-12 sm:mb-16"
-        >
-          Como funciona
-        </h2>
+      <div className="mx-auto max-w-6xl">
+        <SectionHeader
+          label="Como funciona"
+          title="Passo a passo."
+          titleId="como-funciona-titulo"
+        />
 
-        <ol className="space-y-16 sm:space-y-24">
-          {steps.map((step, index) => (
-            <li
-              key={step.title}
-              className="grid md:grid-cols-2 gap-8 md:gap-16 items-center"
-            >
-              <div className={index % 2 === 1 ? "md:order-2" : undefined}>
-                <p className="font-mono text-sm text-sunset mb-3">
-                  {String(index + 1).padStart(2, "0")}
-                </p>
-                <h3 className="font-display text-2xl sm:text-3xl text-cloud mb-4">
-                  {step.title}
-                </h3>
-                <p className="text-base text-soft-gray leading-relaxed max-w-md">
-                  {step.description}
-                </p>
-              </div>
+        <div className="relative">
+          <div
+            aria-hidden="true"
+            className={`absolute inset-x-0 top-0 hidden h-112 overflow-hidden rounded-3xl lg:block ${accentColor}`}
+          >
+            <HorizonLines
+              className={`absolute inset-x-0 bottom-0 h-1/2 w-full ${lineColor}`}
+            />
+          </div>
 
-              <div className="relative h-96 overflow-hidden rounded-md border border-soft-gray/10 bg-pacific-deep">
-                <div className="absolute inset-x-0 top-8 mx-auto w-52">
-                  <PhoneFrame
-                    screenshot={step.screenshot}
-                    sizes="208px"
+          <ol className={`relative grid gap-14 lg:gap-0 ${columns}`}>
+            {steps.map((step, index) => (
+              <li
+                key={step.title}
+                className="flex flex-col md:grid md:grid-cols-2 md:items-center md:gap-10 lg:flex lg:items-stretch lg:gap-0"
+              >
+                <div
+                  className={`relative h-96 overflow-hidden rounded-3xl lg:h-112 lg:rounded-none lg:bg-transparent ${accentColor}`}
+                >
+                  <HorizonLines
+                    className={`absolute inset-x-0 bottom-0 h-1/2 w-full lg:hidden ${lineColor}`}
                   />
+                  {/* Nasce do pé da faixa e divide o eixo esquerdo com o texto do passo. */}
+                  <div className="absolute inset-x-0 top-10 mx-auto w-52 lg:right-auto lg:left-10 lg:top-12 lg:mx-0 lg:w-56">
+                    <PhoneFrame screenshot={step.screenshot} sizes="224px" />
+                  </div>
                 </div>
-              </div>
-            </li>
-          ))}
-        </ol>
+
+                <div className="pt-7 md:pt-0 lg:px-10 lg:pt-10">
+                  <p className="mb-4 font-mono text-sm tracking-widest text-sunset">
+                    {formatPosition(index)}
+                    <span className="text-muted"> / {total}</span>
+                  </p>
+                  <h3 className="mb-3 text-balance font-display text-3xl font-extrabold leading-none tracking-tight text-cloud sm:text-4xl">
+                    {step.title}
+                  </h3>
+                  <p className="max-w-sm text-lg leading-relaxed text-muted">
+                    {step.description}
+                  </p>
+                  {/* Fica com o texto: no painel colorido o contraste não fecha. */}
+                  {step.screenshot.caption && (
+                    <p className="mt-4 text-sm text-muted">
+                      {step.screenshot.caption}
+                    </p>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
     </section>
   );

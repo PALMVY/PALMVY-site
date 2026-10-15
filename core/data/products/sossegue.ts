@@ -33,18 +33,31 @@ const screens = {
   },
 } satisfies Record<string, ProductScreenshot>;
 
+// Lançamento (MVP): conversa dentro do app, só texto, só Android. Fora do
+// site até existirem no app: Fôlego de Caixa, notificações, níveis de
+// acolhimento, envio automático de cobrança e áudio (aparece como "em breve").
+// PRINTS PENDENTES: painel, histórico e perfil ainda mostram o que saiu.
 export const sossegue: Product = {
   id: "sossegue",
   name: "Sossegue",
-  tagline: "Clareza e alívio para quem trabalha por conta",
+  tagline: "Pare de carregar o negócio de cabeça.",
+  category: "Finanças · MEI",
   description:
-    "Feito para MEIs e autônomos que sabem fazer o trabalho, mas carregam a ansiedade de não saber se o negócio está bem. O Sossegue mostra, de forma humana, o que importa, sem planilha e sem sistema chato.",
+    "Conte o que aconteceu do jeito que você fala. O Sossegue anota, lembra quem está atrasado e mostra quanto entrou e quanto falta receber.",
   status: "coming-soon",
-  platforms: ["ios", "android"],
+  platforms: ["android"],
+  painPoints: {
+    title: "Seu negócio não deveria morar na sua cabeça.",
+    items: [
+      "Cliente pagou e ninguém lembra de dar baixa.",
+      "Caderninho, planilha e cobranças perdidas no meio do WhatsApp.",
+      "Domingo à noite pensando em quanto falta receber.",
+    ],
+  },
   highlights: [
-    "Painel calmo que mostra se o seu mês está sob controle",
-    "Conversa natural por texto ou áudio, sem aprender sistema",
-    "Clientes, cobranças e fôlego do negócio em um só lugar",
+    "Painel calmo: quanto entrou, quem está em dia e quem precisa de cobrança.",
+    "Conversa natural por texto, sem aprender sistema. Áudio em breve.",
+    "Mensagem de cobrança pronta para você copiar e enviar.",
   ],
   accentColor: "bg-pacific-blue",
   tone: "dark",
@@ -53,93 +66,108 @@ export const sossegue: Product = {
   imageSize: { width: 391, height: 118 },
   featured: true,
   landingPage: "/produtos/sossegue",
-  heroScreenshots: [screens.painel, screens.conversa],
+  // Conversa na frente: o painel ainda mostra o Fôlego (print novo pendente).
+  heroScreenshots: [screens.conversa, screens.painel],
   steps: [
     {
       title: "Conte o que aconteceu",
       description:
-        "Escreva ou grave um áudio do jeito que você falaria. Por exemplo: “Atendi a Juliana, 180, ela paga sexta”. Não tem formulário nem campo para preencher.",
+        "Escreva do jeito que fala. Por exemplo: “Atendi a Juliana hoje, R$ 180, ela paga na sexta.”",
       screenshot: screens.conversa,
     },
     {
-      title: "Tudo fica registrado",
+      title: "Confirme em um toque",
       description:
-        "Cada entrada, gasto e valor a receber vai para o histórico, organizado por dia. Você acompanha o mês sem montar planilha.",
+        "O Sossegue repete o que entendeu. Você confirma ou corrige. Se não mexer em 45 segundos, ele registra sozinho.",
       screenshot: screens.historico,
     },
     {
-      title: "Veja se o mês está sob controle",
+      title: "Veja o mês com clareza",
       description:
-        "O painel mostra quanto entrou, quanto falta receber e quanto você pode tirar. O Fôlego de Caixa conta por quantos dias o negócio se sustenta sem novas entradas.",
+        "O painel mostra quanto entrou, quanto falta receber e quem está atrasado.",
       screenshot: screens.painel,
     },
   ],
   spotlight: {
-    title: "No seu ritmo, sem pressão",
+    title: "No seu ritmo, sem pressão.",
     description:
-      "O Sossegue se adapta a como você trabalha. Nada de aviso gritando na tela.",
+      "Você conversa do seu jeito e o painel organiza o resto. Nada de planilha nem de sistema complicado.",
     points: [
-      "Avisos sem urgência, no seu ritmo",
-      "Lembretes e cobranças com tom de voz gentil",
-      "Você define o nível de acolhimento do app",
+      "Painel do mês com o que entrou e o que falta receber",
+      "Clientes com status: em dia ou em atraso",
+      "Histórico de todos os registros",
+      "Mensagem de cobrança pronta para copiar",
     ],
     screenshots: [screens.perfil, screens.boasVindas],
   },
   faq: [
     {
+      topic: "O app",
       question: "O que é o Sossegue?",
       answer:
-        "É o painel de paz do seu negócio. Ele mostra, de forma simples e humana, como está o seu mês, quem precisa de atenção e quantos dias de fôlego você ainda tem — sem planilha e sem você precisar virar administrador.",
+        "É um painel calmo para o seu negócio. Você conta o que aconteceu, e ele organiza clientes, valores a receber e o que entrou no mês, sem planilha.",
     },
     {
-      question: "Para quem é o Sossegue?",
+      topic: "O app",
+      question: "Para quem é?",
       answer:
-        "Para MEIs, autônomos e prestadores de serviço que sabem fazer o trabalho, mas carregam a ansiedade de não saber se o negócio está bem.",
+        "Para MEIs e autônomos que sabem fazer o trabalho, mas carregam a ansiedade de não saber se o negócio está bem.",
     },
     {
+      topic: "O app",
       question: "É mais um controle financeiro?",
       answer:
-        "Não. A maioria dos apps organiza gastos pessoais (iFood, Uber, contas da casa). O Sossegue existe para uma dor diferente: a clareza e o alívio em relação ao seu negócio (clientes, valores a receber e fôlego).",
+        "Não. O Sossegue não é para gastos pessoais. Ele cuida do seu negócio: clientes, valores a receber e a sensação de estar no controle.",
     },
     {
-      question: "Preciso entender de tecnologia ou sistema?",
+      topic: "O app",
+      question: "Preciso entender de tecnologia?",
       answer:
-        "Não. A ideia é exatamente o contrário. Você conversa naturalmente (por texto ou áudio) e o painel te devolve a informação de forma calma e clara.",
+        "Não. Você conversa do jeito que fala, por texto, e o painel devolve tudo de forma clara.",
     },
     {
+      topic: "No dia a dia",
       question: "Como funciona a conversa?",
       answer:
-        "Você fala do jeito que fala no dia a dia, por exemplo: “Atendi a Carla hoje, R$180, ela vai pagar na sexta”, “Recebi os 180 da Juliana” ou “O Pedro tá devendo faz tempo”. O Sossegue organiza e atualiza o painel.",
+        "Você fala do jeito que fala no dia a dia, por exemplo: “Atendi a Carla hoje, R$ 180, ela vai pagar na sexta”, “Recebi os 180 da Juliana” ou “O Pedro tá devendo faz tempo”. O Sossegue organiza e atualiza o painel.",
     },
     {
-      question: "O que é o Fôlego de Caixa?",
+      topic: "No dia a dia",
+      question: "O que aparece no painel?",
       answer:
-        "É o número de dias que o seu negócio se sustenta sem novas entradas. Você vê esse número no painel, junto com o que entrou no mês e o que ainda falta receber.",
+        "Quanto entrou no mês, quanto falta receber, quem está em dia e quem precisa de cobrança.",
     },
     {
+      topic: "No dia a dia",
       question: "Vai funcionar pelo WhatsApp?",
       answer:
-        "Na fase inicial a conversa pode acontecer pelo WhatsApp para facilitar. O coração do produto, porém, é o painel calmo — a experiência principal de clareza e alívio.",
+        "Não. O Sossegue é um app, e a conversa acontece dentro dele. Quando quiser cobrar alguém, você copia a mensagem pronta e cola no WhatsApp.",
     },
     {
+      topic: "No dia a dia",
       question: "O Sossegue emite nota fiscal?",
       answer:
-        "No começo não. O foco do MVP é tirar o peso da cabeça: visão do negócio, clientes, cobranças e fôlego. Emissão de nota e integrações mais pesadas ficam para depois.",
+        "No começo, não. O foco é tirar o peso da cabeça: visão do negócio, clientes e cobranças. Emissão de nota e integrações mais pesadas ficam para depois.",
     },
     {
+      topic: "Lançamento",
       question: "Quando vai ficar pronto?",
       answer:
-        "Estamos construindo com calma e cuidado. Deixe seu interesse pelo botão “Quero ser avisado” que a gente te avisa assim que estiver disponível.",
+        "Ainda não tem data definida. Quem deixar o interesse será avisado assim que liberarmos.",
     },
     {
-      question: "Meus dados ficam seguros?",
-      answer:
-        "Tratamos seus dados com cuidado, não os vendemos e explicamos tudo na nossa Política de Privacidade.",
-    },
-    {
+      topic: "Lançamento",
       question: "Tem custo?",
       answer:
-        "Ainda estamos definindo. Quem entrar na lista de interessados será avisado com antecedência.",
+        "Ainda estamos definindo. Quem deixar o interesse será avisado com antecedência.",
+    },
+    {
+      // PENDENTE (bloqueia o lançamento do app): a "Política de Privacidade"
+      // daqui é a do Sossegue, que ainda não existe; a do site não cobre o app.
+      topic: "Privacidade",
+      question: "Meus dados ficam seguros?",
+      answer:
+        "Seus dados são tratados conforme a LGPD e não são vendidos. Os detalhes estão na Política de Privacidade.",
     },
   ],
 };

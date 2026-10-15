@@ -1,7 +1,7 @@
 # Architecture Decision Records (ADR) & System Guidelines
 **Projeto:** PALMVY — Portal principal & ecossistema de produtos
 **Autor:** Sam Campos Almeida
-**Propriedade de:** PALMVY (anteriormente West Sunset Labs)
+**Propriedade de:** PALMVY
 **Licença:** All Rights Reserved (Proprietary)
 **Última revisão:** 2026-10-01
 
@@ -35,8 +35,9 @@ Este documento dita as regras arquiteturais, visuais e de governança do portal 
 | `muted` | `#8FA1AD` | Texto secundário |
 | `sunset` / `sunset-dark` | `#FF7A45` / `#E2673A` | Acento, CTAs, o sol do logo |
 | `gold` | `#FFC857` | Detalhes pontuais (não é usado no logo) |
-| `pacific-blue` | `#147D9A` | Identidade de produto |
-| `palm-green` | `#164A43` | Identidade de produto |
+| `pacific-blue` | `#147D9A` | Identidade de produto (Sossegue) |
+| `palm-green` | `#164A43` | Identidade de produto (SafeZone) |
+| `amber` | `#6B4413` | Identidade de produto (TuneLab) |
 
 - Use sempre os tokens (`bg-pacific-night`), nunca hex solto em componentes.
 - **Sem gradientes de cor.** A profundidade vem de grão sutil (`.grain-overlay`), linhas de horizonte e contraste entre superfícies.
@@ -70,8 +71,11 @@ Este documento dita as regras arquiteturais, visuais e de governança do portal 
 - Prints devem usar dados de demonstração, sem informação de pessoas reais.
 
 ## 6. Contato e conversão
+- **Estado atual (2026-10-15):** foco nos 3 apps. O sob medida está pausado: a home mostra `CustomWorkPaused` no lugar de `CustomWork`, `HowWeWork` e `Contact` (os componentes continuam no projeto para reabrir). As landings não usam WhatsApp: o CTA é "Acompanhar no Instagram" (`PRODUCT_FOLLOW_LINK`). O menu lista os apps e não tem botão de contato. Nada do WhatsApp aparece no site, e `NEXT_PUBLIC_WHATSAPP_NUMBER` só volta a valer quando o sob medida reabrir.
+- O texto abaixo descreve o fluxo com WhatsApp, que volta junto com o sob medida.
 - O destino principal dos CTAs é o **WhatsApp**, definido em `core/data/contact.ts` a partir da variável `NEXT_PUBLIC_WHATSAPP_NUMBER` (país + DDD + número, só dígitos).
-- Sem número válido, o CTA leva à seção `/#como-trabalhamos` da home. A validação é feita em `buildContactLink`. Cada landing usa uma mensagem própria (`getProductContactLink`).
+- Sem número válido, a validação em `buildContactLink` aplica um fallback por contexto: o contato geral (Navbar) leva à seção `/#contato` da home; orçamento (`getQuoteContactLink`) e landings de produto (`getProductContactLink`) caem em `mailto:` com a mesma mensagem, para a pessoa não perder o contexto. Cada landing usa uma mensagem própria.
+- O texto de apoio dos CTAs segue o destino real do link (`getContactChannel`): nunca prometa WhatsApp quando o botão abre e-mail.
 - Links externos usam sempre `target="_blank"` com `rel="noopener noreferrer"` (o `CtaLink` já faz isso).
 - Para publicar, cadastre a mesma variável no painel do serviço de hospedagem. Sem ela, o botão em produção cai no fallback.
 
@@ -87,6 +91,9 @@ Este documento dita as regras arquiteturais, visuais e de governança do portal 
 - Apenas utilitários nativos do Tailwind/CSS. Proibido Framer Motion, GSAP ou similares sem autorização.
 - Transições específicas (`transition-colors`, `transition-[opacity,transform,visibility]`). Evite `transition-all`.
 - Todo movimento respeita `prefers-reduced-motion` (`motion-reduce:transition-none`).
+- Transições entre estados e rotas usam a View Transitions API nativa: `document.startViewTransition` no orçamento e o `<ViewTransition>` do React (já incluído no Next 16, sem configuração) no painel que viaja do card para a landing. Sem suporte, a troca é direta.
+- O `ViewTransition` é tipado pelo `@types/react` 19.2+ (canal `react/canary`, que os tipos do Next já carregam). Não há declaração própria no projeto.
+- A barra fixa de CTA das landings (celular) fica logo depois da abertura no DOM, como `<aside aria-label="Contato rápido">`, e liga um `scroll-padding-bottom` no `globals.css` para o foco do teclado nunca ficar atrás dela.
 
 ## 9. Testes
 - **Ferramenta:** Vitest. Comandos: `npm test` (uma vez) e `npm run test:watch`.

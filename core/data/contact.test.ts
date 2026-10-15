@@ -1,11 +1,16 @@
 import { describe, expect, it } from 'vitest';
 import {
+  CONTACT_EMAIL,
+  INSTAGRAM_URL,
   buildContactLink,
+  getContactChannel,
   getProductContactLink,
+  getQuoteContactLink,
   getSocialLinks,
 } from '@/core/data/contact';
+import { findPriceTier } from '@/core/data/pricing';
 
-const FALLBACK_LINK = { href: '/#como-trabalhamos', isExternal: false };
+const FALLBACK_LINK = { href: '/#contato', isExternal: false };
 const VALID_PHONE = '5511999999999';
 
 describe('buildContactLink', () => {
@@ -62,10 +67,69 @@ describe('getProductContactLink', () => {
     expect(text).toContain('saber mais sobre o Sossegue');
   });
 
-  it('cai no fallback sem número válido', () => {
-    expect(
-      getProductContactLink({ name: 'Sossegue', status: 'launched' }, undefined),
-    ).toEqual(FALLBACK_LINK);
+  it('cai no e-mail com a mensagem do produto sem número válido', () => {
+    const link = getProductContactLink(
+      { name: 'SafeZone', status: 'coming-soon' },
+      undefined,
+    );
+    const url = new URL(link.href);
+
+    expect(link.isExternal).toBe(false);
+    expect(url.protocol).toBe('mailto:');
+    expect(url.pathname).toBe(CONTACT_EMAIL);
+    expect(url.searchParams.get('subject')).toBe('SafeZone: aviso de lançamento');
+    expect(url.searchParams.get('body')).toContain('avisado');
+  });
+
+  it('não leva a landing de volta para a home sem número válido', () => {
+    const link = getProductContactLink(
+      { name: 'Sossegue', status: 'launched' },
+      'abc',
+    );
+
+    expect(link.href.startsWith('/')).toBe(false);
+    expect(new URL(link.href).searchParams.get('subject')).toBe('Sobre o Sossegue');
+  });
+});
+
+describe('getQuoteContactLink', () => {
+  const app = findPriceTier('app');
+
+  it('abre o WhatsApp com o tipo e o preço inicial na mensagem', () => {
+    const link = getQuoteContactLink(app, VALID_PHONE);
+    const text = new URL(link.href).searchParams.get('text');
+
+    expect(link.isExternal).toBe(true);
+    expect(text).toContain('App mobile');
+    expect(text).toMatch(/R\$\s20\.000/);
+  });
+
+  it('usa a mensagem padrão quando a pessoa ainda não sabe o tipo', () => {
+    const text = new URL(
+      getQuoteContactLink(undefined, VALID_PHONE).href,
+    ).searchParams.get('text');
+
+    expect(text).toContain('PALMVY');
+    expect(text).not.toContain('orçamento de');
+  });
+
+  it('cai no e-mail, e não na própria página, sem número válido', () => {
+    const link = getQuoteContactLink(app, undefined);
+    const url = new URL(link.href);
+
+    expect(link.isExternal).toBe(false);
+    expect(url.protocol).toBe('mailto:');
+    expect(url.pathname).toBe(CONTACT_EMAIL);
+    expect(url.searchParams.get('subject')).toBe('Orçamento: App mobile');
+    expect(url.searchParams.get('body')).toContain('App mobile');
+  });
+});
+
+describe('getContactChannel', () => {
+  it('reconhece WhatsApp, e-mail e âncora da página', () => {
+    expect(getContactChannel(buildContactLink(VALID_PHONE))).toBe('whatsapp');
+    expect(getContactChannel(getQuoteContactLink(undefined, undefined))).toBe('email');
+    expect(getContactChannel(FALLBACK_LINK)).toBe('page');
   });
 });
 
@@ -93,5 +157,11 @@ describe('getSocialLinks', () => {
     expect(links).toEqual([
       { label: 'Instagram', href: 'https://instagram.com/palmvy' },
     ]);
+  });
+});
+
+describe('INSTAGRAM_URL', () => {
+  it('é o mesmo perfil listado nas redes sociais', () => {
+    expect(getSocialLinks()).toContainEqual({ label: 'Instagram', href: INSTAGRAM_URL });
   });
 });

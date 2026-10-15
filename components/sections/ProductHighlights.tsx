@@ -1,31 +1,40 @@
-import { Card } from "@/components/ui/Card";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 import type { Product } from "@/core/data/products";
 
-export function ProductHighlights({ highlights }: Pick<Product, "highlights">) {
+const formatPosition = (index: number): string =>
+  String(index + 1).padStart(2, "0");
+
+/** Destaques em régua (como a tabela de preços da home), não em cards. */
+export function ProductHighlights({
+  name,
+  highlights,
+}: Pick<Product, "name" | "highlights">) {
   return (
     <section
       aria-labelledby="destaques-titulo"
-      className="relative py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border-t border-soft-gray/10"
+      className="border-t border-cloud/10 px-4 py-24 sm:px-6 sm:py-32 lg:px-8"
     >
-      <div className="max-w-6xl mx-auto">
-        <h2
-          id="destaques-titulo"
-          className="font-display text-3xl sm:text-4xl text-cloud mb-10"
-        >
-          Destaques
-        </h2>
-        <ul className="grid md:grid-cols-3 gap-6">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeader
+          label="Destaques"
+          title={`O que o ${name} faz.`}
+          titleId="destaques-titulo"
+        />
+        <ol>
           {highlights.map((highlight, index) => (
-            <li key={highlight}>
-              <Card className="p-6 h-full">
-                <p className="font-mono text-sm text-sunset mb-3">
-                  {String(index + 1).padStart(2, "0")}
-                </p>
-                <p className="text-base text-cloud">{highlight}</p>
-              </Card>
+            <li
+              key={highlight}
+              className="grid grid-cols-[3rem_1fr] items-baseline gap-4 border-b border-cloud/10 py-6 sm:grid-cols-[5rem_1fr] sm:py-8"
+            >
+              <span className="font-mono text-sm tracking-widest text-sunset">
+                {formatPosition(index)}
+              </span>
+              <p className="text-balance text-xl font-semibold leading-snug tracking-tight text-cloud sm:text-3xl">
+                {highlight}
+              </p>
             </li>
           ))}
-        </ul>
+        </ol>
       </div>
     </section>
   );

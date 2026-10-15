@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { CloudflareAnalytics } from "@/components/ui/CloudflareAnalytics";
 import { SITE_URL } from "@/core/data/site";
@@ -16,10 +16,16 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
+// Barra do navegador no celular na mesma cor noturna da página (pacific-night).
+export const viewport: Viewport = {
+  themeColor: "#071a2b",
+  colorScheme: "dark",
+};
+
 export const metadata: Metadata = {
   title: "PALMVY — Apps feitos com calma",
   description:
-    "Web, Mobile, and product development studio",
+    "Estúdio de produto: apps próprios e sites e apps sob medida, com preço na mesa.",
   metadataBase: new URL(SITE_URL),
   keywords: [
     "apps",

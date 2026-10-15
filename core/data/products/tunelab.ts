@@ -1,4 +1,19 @@
+import { formatCents, type CreditPack } from "../pricing";
 import type { Product, ProductScreenshot } from "./types";
+
+// Fonte única dos pacotes: a seção Preço e a resposta da FAQ leem daqui.
+export const PACOTES_TUNELAB: readonly CreditPack[] = [
+  { credits: 1, priceInCents: 690 },
+  { credits: 5, priceInCents: 2490 },
+  { credits: 15, priceInCents: 5990 },
+];
+
+const [avulsa, pacote5, pacote15] = PACOTES_TUNELAB.map(({ priceInCents }) =>
+  formatCents(priceInCents),
+);
+
+// A tela da garagem mostra valores de ganho que não vêm de uma análise real.
+const EXAMPLE_CAPTION = "Exemplo ilustrativo. Os valores são estimativas.";
 
 // Todas as telas têm o mesmo tamanho (ver public/images/products/tunelab-app).
 const APP_SCREEN_SIZE = { width: 720, height: 1512 } as const;
@@ -13,7 +28,8 @@ const screens = {
   },
   garagem: {
     src: `${IMAGES_BASE}/garagem.webp`,
-    alt: "Tela inicial do TuneLab com a garagem Meus carros, o saldo de créditos e sugestões de modificações para você.",
+    alt: "Tela inicial do TuneLab com a garagem Meus carros, seu saldo de análises e sugestões de modificações para você.",
+    caption: EXAMPLE_CAPTION,
     ...APP_SCREEN_SIZE,
   },
 } satisfies Record<string, ProductScreenshot>;
@@ -21,20 +37,22 @@ const screens = {
 export const tunelab: Product = {
   id: "tunelab",
   name: "TuneLab",
-  tagline: "IA que entende seu carro",
+  tagline: "Sua oficina de tuning com inteligência artificial",
+  category: "IA · Carros",
   description:
     "App mobile para entusiastas de carros. Analisa o veículo por fotos e texto e sugere tunagens de aparência e performance de forma educativa.",
   status: "coming-soon",
-  platforms: ["ios", "android"],
+  // Android primeiro; o iOS entra aqui quando sair (a FAQ avisa a ordem).
+  platforms: ["android"],
   highlights: [
     "Analisa o veículo por fotos e texto",
     "Sugere tunagens de aparência e performance",
     "Apresenta tudo de forma educativa",
   ],
-  accentColor: "bg-gold",
-  tone: "light",
-  logoBg: "bg-pacific-night",
-  image: `${IMAGES_BASE}/tunelab.png`,
+  accentColor: "bg-amber",
+  tone: "dark",
+  image: `${IMAGES_BASE}/tunelab.webp`,
+  imageSize: { width: 480, height: 480 },
   featured: false,
   landingPage: "/produtos/tunelab",
   heroScreenshots: [screens.escaneie, screens.garagem],
@@ -52,46 +70,79 @@ export const tunelab: Product = {
       screenshot: screens.garagem,
     },
   ],
+  pricing: {
+    title: "Pague por análise. Sem assinatura.",
+    description:
+      "A primeira é por nossa conta: entre com o Google, verifique o celular por SMS e ganhe 1 análise grátis. Depois, você compra créditos quando quiser.",
+    packs: PACOTES_TUNELAB,
+    included: [
+      "Cada análise de carro usa 1 crédito",
+      "Os créditos não expiram",
+      "Sem assinatura nem cobrança mensal",
+      "Saldo sempre na tela inicial do app",
+    ],
+    note: "Valores previstos para o lançamento do app.",
+  },
   faq: [
     {
+      topic: "O app",
       question: "O que é o TuneLab?",
       answer:
         "Um app mobile para entusiastas de carros. Você fotografa o veículo e a Mia, a IA do TuneLab, sugere modificações de aparência e performance de forma educativa.",
     },
     {
+      topic: "O app",
       question: "Para quem é o TuneLab?",
       answer:
         "Para entusiastas de carros em geral, de quem está começando a pensar em um projeto a quem já tem o carro modificado.",
     },
     {
+      topic: "O app",
       question: "Como a análise funciona?",
       answer:
         "Você tira fotos da frente, da lateral, da traseira e do motor e conta o que busca. A Mia usa isso para montar as sugestões para o seu carro.",
     },
     {
+      topic: "Privacidade",
+      question: "Minhas fotos ficam públicas?",
+      answer:
+        "Não. As fotos são enviadas a um serviço de IA só para gerar a sua análise. Não publicamos nem mostramos a outros usuários sem sua autorização, e você pode excluir sua conta quando quiser, o que apaga as fotos.",
+    },
+    {
+      topic: "O app",
       question: "Preciso informar o modelo do carro?",
       answer:
         "Não, é opcional. Mas informar marca, modelo e ano deixa as peças sugeridas muito mais precisas.",
     },
     {
+      topic: "Preço",
+      question: "O TuneLab é pago?",
+      answer:
+        `Você começa de graça: entrando com o Google e verificando seu celular por SMS, ganha 1 análise grátis. Depois, as análises são vendidas em pacotes, sem assinatura: 1 análise por ${avulsa}, 5 por ${pacote5} ou 15 por ${pacote15}. Cada análise de carro usa 1 crédito. Seus créditos não expiram, e o saldo aparece na tela inicial do app.`,
+    },
+    {
+      topic: "Limites e lançamento",
       question: "Os valores e os ganhos de potência são garantidos?",
       answer:
         "Não. São estimativas com objetivo educativo. Custos e resultados variam conforme o carro, as peças e a oficina, então confirme tudo com um profissional antes de qualquer modificação.",
     },
     {
+      topic: "Limites e lançamento",
       question: "As modificações sugeridas são legais?",
       answer:
         "Cada modificação precisa respeitar a legislação de trânsito em vigor. Antes de instalar qualquer peça, consulte um profissional e confirme as regras que valem para o seu carro.",
     },
     {
+      topic: "Limites e lançamento",
       question: "O TuneLab substitui a oficina ou o preparador?",
       answer:
         "Não. Ele ajuda você a entender as possibilidades e a chegar mais preparado à conversa com o profissional que vai fazer o trabalho.",
     },
     {
+      topic: "Limites e lançamento",
       question: "Quando o TuneLab chega?",
       answer:
-        "Em breve. Se quiser ser avisado quando ele sair, chame a gente no WhatsApp.",
+        "Primeiro no Android, depois no iOS. Se quiser ser avisado, chame a gente no WhatsApp.",
     },
   ],
 };

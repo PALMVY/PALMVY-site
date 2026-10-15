@@ -13,10 +13,13 @@ const CLOSE_ICON_PATH = 'M6 6l12 12M18 6L6 18';
 
 type MobileMenuProps = {
   links: readonly NavLink[];
-  contactLink: ContactLink;
+  /** Botão de contato no fim do menu. Sem ele (sob medida pausado), não aparece. */
+  contactLink?: ContactLink;
+  /** Rota da página atual, marcada com aria-current. */
+  currentHref?: string;
 };
 
-export function MobileMenu({ links, contactLink }: MobileMenuProps) {
+export function MobileMenu({ links, contactLink, currentHref }: MobileMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const toggleButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -95,7 +98,10 @@ export function MobileMenu({ links, contactLink }: MobileMenuProps) {
               <Link
                 href={href}
                 onClick={closeMenu}
-                className="block py-4 text-2xl text-cloud transition-colors hover:text-sunset"
+                aria-current={href === currentHref ? 'page' : undefined}
+                className={`block py-4 text-2xl transition-colors hover:text-sunset ${
+                  href === currentHref ? 'text-sunset' : 'text-cloud'
+                }`}
               >
                 {label}
               </Link>
@@ -103,14 +109,16 @@ export function MobileMenu({ links, contactLink }: MobileMenuProps) {
           ))}
         </ul>
 
-        <CtaLink
-          href={contactLink.href}
-          isExternal={contactLink.isExternal}
-          onClick={closeMenu}
-          className="mt-6 inline-flex h-12 w-full items-center justify-center rounded-md bg-sunset px-4 text-base font-medium text-pacific-night transition-colors hover:bg-sunset-dark sm:hidden"
-        >
-          Vamos conversar?
-        </CtaLink>
+        {contactLink && (
+          <CtaLink
+            href={contactLink.href}
+            isExternal={contactLink.isExternal}
+            onClick={closeMenu}
+            className="mt-6 inline-flex h-12 w-full items-center justify-center rounded-md bg-sunset px-4 text-base font-medium text-pacific-night transition-colors hover:bg-sunset-dark sm:hidden"
+          >
+            Vamos conversar?
+          </CtaLink>
+        )}
 
         <div className="mt-8 space-y-1">
           <p className="text-sm text-soft-gray">

@@ -27,7 +27,7 @@ Crie um arquivo `.env` (ou `.env.local`) na raiz com o número de WhatsApp usado
 NEXT_PUBLIC_WHATSAPP_NUMBER=5511999999999
 ```
 
-Sem essa variável, os botões de contato rolam até a seção "Como trabalhamos". Depois, inicie o servidor:
+Sem essa variável, o contato geral rola até a seção de orçamento e os botões de orçamento e de produto abrem um e-mail com a mensagem pronta. Depois, inicie o servidor:
 
 ```bash
 npm run dev

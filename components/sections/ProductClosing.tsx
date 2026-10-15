@@ -1,6 +1,7 @@
-import { Card } from "@/components/ui/Card";
 import { CtaLink } from "@/components/ui/CtaLink";
 import { ProductVisual } from "@/components/ui/ProductVisual";
+import { SectionLabel } from "@/components/ui/SectionLabel";
+import { SURFACE } from "@/components/ui/surfaceStyles";
 import type { ContactLink } from "@/core/data/contact";
 import type { Product } from "@/core/data/products";
 
@@ -9,6 +10,8 @@ type ProductClosingProps = {
   contactLink: ContactLink;
   ctaLabel: string;
   title: string;
+  /** Frase que diz como a conversa acontece (WhatsApp ou e-mail). */
+  contactNote: string;
 };
 
 export function ProductClosing({
@@ -16,46 +19,46 @@ export function ProductClosing({
   contactLink,
   ctaLabel,
   title,
+  contactNote,
 }: ProductClosingProps) {
   return (
     <section
       aria-labelledby="contato-titulo"
-      className="relative py-16 sm:py-24 px-4 sm:px-6 lg:px-8 border-t border-soft-gray/10"
+      className="border-t border-cloud/10 px-4 py-24 sm:px-6 sm:py-32 lg:px-8"
     >
-      <div className="max-w-6xl mx-auto">
-        <Card className="overflow-hidden p-0">
-          <div className="grid md:grid-cols-5">
-            <div className="p-8 sm:p-12 md:col-span-3">
-              <div className="max-w-xl">
-                <h2
-                  id="contato-titulo"
-                  className="font-display text-2xl sm:text-3xl text-cloud mb-4"
-                >
-                  {title}
-                </h2>
-                <p className="text-soft-gray mb-8">
-                  Fale direto com a gente pelo WhatsApp. Sem formulário e sem
-                  cadastro.
-                </p>
-                <CtaLink
-                  href={contactLink.href}
-                  isExternal={contactLink.isExternal}
-                  variant="primary"
-                  size="lg"
-                >
-                  {ctaLabel}
-                </CtaLink>
-              </div>
+      <div className={`mx-auto max-w-6xl overflow-hidden rounded-3xl ${SURFACE}`}>
+        <div className="grid md:grid-cols-5">
+          <div className="p-7 sm:p-12 md:col-span-3">
+            <SectionLabel className="mb-4">Contato</SectionLabel>
+            <h2
+              id="contato-titulo"
+              className="text-balance font-display text-5xl font-extrabold leading-[0.95] tracking-tighter text-cloud sm:text-6xl"
+            >
+              {title}
+            </h2>
+            <p className="mt-6 max-w-md text-lg leading-relaxed text-muted">
+              {contactNote}
+            </p>
+            {/* No celular, o CTA já está na barra fixa da base. */}
+            <div className="mt-8 hidden md:block">
+              <CtaLink
+                href={contactLink.href}
+                isExternal={contactLink.isExternal}
+                variant="primary"
+                size="xl"
+              >
+                {ctaLabel} <span aria-hidden="true">→</span>
+              </CtaLink>
             </div>
-
-            {product.image && (
-              <ProductVisual
-                product={product}
-                className="hidden min-h-64 md:col-span-2 md:flex"
-              />
-            )}
           </div>
-        </Card>
+
+          {product.image && (
+            <ProductVisual
+              product={product}
+              className="hidden min-h-64 md:col-span-2 md:flex"
+            />
+          )}
+        </div>
       </div>
     </section>
   );

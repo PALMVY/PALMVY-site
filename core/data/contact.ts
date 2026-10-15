@@ -1,3 +1,4 @@
+import { formatPrice, type PriceTier } from '@/core/data/pricing';
 import type { Product } from '@/core/data/products';
 
 export type ContactLink = {
@@ -12,8 +13,19 @@ export type SocialLink = {
   href: string | null;
 };
 
+export const INSTAGRAM_URL = 'https://www.instagram.com/palmvyco/';
+
+/**
+ * CTA das landings enquanto os apps estão "em breve": acompanhar no Instagram.
+ * O site não coleta dado nenhum (sem lista de espera nem WhatsApp por ora).
+ */
+export const PRODUCT_FOLLOW_LINK: ContactLink = {
+  href: INSTAGRAM_URL,
+  isExternal: true,
+};
+
 const SOCIAL_LINKS: SocialLink[] = [
-  { label: 'Instagram', href: 'https://www.instagram.com/palmvyco/' },
+  { label: 'Instagram', href: INSTAGRAM_URL },
   { label: 'Twitter/X', href: 'https://x.com/palmvyco' },
   { label: 'Dev.to', href: 'https://dev.to/palmvyco' },
 ];
@@ -23,9 +35,16 @@ const DEFAULT_WHATSAPP_MESSAGE =
 
 const WHATSAPP_PHONE_PATTERN = /^\d{10,15}$/;
 
+// Sem WhatsApp, o contato geral leva à seção de orçamento, que tem o próprio
+// fallback por e-mail. Antes ia para "Como funciona", que não tem ação.
 const FALLBACK_LINK: ContactLink = {
-  href: '/#como-trabalhamos',
+  href: '/#contato',
   isExternal: false,
+};
+
+const buildEmailLink = (subject: string, body: string): ContactLink => {
+  const query = `subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  return { href: `mailto:${CONTACT_EMAIL}?${query}`, isExternal: false };
 };
 
 export const buildContactLink = (
@@ -54,10 +73,57 @@ const buildProductMessage = ({
     ? `Olá! Gostaria de saber mais sobre o ${name}.`
     : `Olá! Tenho interesse no ${name} e gostaria de ser avisado quando lançar.`;
 
+/**
+ * Contato de uma landing. Sem número válido, cai no e-mail com a mesma
+ * mensagem: voltar para a home faria a pessoa perder o produto de vista.
+ */
 export const getProductContactLink = (
   product: Pick<Product, 'name' | 'status'>,
   phone: string | undefined = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER,
-): ContactLink => buildContactLink(phone, buildProductMessage(product));
+): ContactLink => {
+  const message = buildProductMessage(product);
+  const whatsappLink = buildContactLink(phone, message);
+  if (whatsappLink.isExternal) return whatsappLink;
+
+  const subject =
+    product.status === 'launched'
+      ? `Sobre o ${product.name}`
+      : `${product.name}: aviso de lançamento`;
+
+  return buildEmailLink(subject, message);
+};
+
+export type ContactChannel = 'whatsapp' | 'email' | 'page';
+
+/** Para onde o link leva; o texto de apoio dos CTAs depende disso. */
+export const getContactChannel = ({ href }: ContactLink): ContactChannel => {
+  if (href.startsWith('https://wa.me/')) return 'whatsapp';
+  if (href.startsWith('mailto:')) return 'email';
+  return 'page';
+};
+
+export const buildQuoteMessage = (tier: PriceTier | undefined): string =>
+  tier
+    ? `Olá! Vim pelo site da PALMVY e quero um orçamento de ${tier.name} (a partir de ${formatPrice(tier.startingPrice)}).`
+    : DEFAULT_WHATSAPP_MESSAGE;
+
+/**
+ * Link de orçamento sob medida. Vai para o WhatsApp com a mensagem pronta;
+ * sem número válido, cai no e-mail (o fallback padrão levaria de volta à
+ * própria página, o que não ajuda quem já está pedindo orçamento).
+ */
+export const getQuoteContactLink = (
+  tier: PriceTier | undefined,
+  phone: string | undefined = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER,
+): ContactLink => {
+  const message = buildQuoteMessage(tier);
+  const whatsappLink = buildContactLink(phone, message);
+  if (whatsappLink.isExternal) return whatsappLink;
+
+  const subject = tier ? `Orçamento: ${tier.name}` : 'Orçamento';
+
+  return buildEmailLink(subject, message);
+};
 
 export const getSocialLinks = (
   links: SocialLink[] = SOCIAL_LINKS,
