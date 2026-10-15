@@ -22,6 +22,8 @@ export function ProductHero({
   contactNote,
 }: ProductHeroProps) {
   const { heroScreenshots } = product;
+  // As duas telas dividem um painel, então a legenda é uma só.
+  const heroCaption = heroScreenshots?.find(({ caption }) => caption)?.caption;
 
   return (
     <section
@@ -81,21 +83,26 @@ export function ProductHero({
           </div>
         </div>
 
-        {/* Mesmo painel do card na home: ele cresce até aqui na navegação. */}
-        <ProductArtTransition productId={product.id}>
-          {heroScreenshots && heroScreenshots.length > 0 ? (
-            <PhoneStage
-              screenshots={heroScreenshots}
-              accentColor={product.accentColor}
-              tone={product.tone}
-              preload
-            />
-          ) : (
-            <div className="overflow-hidden rounded-3xl border border-cloud/10">
-              <ProductVisual product={product} className="aspect-square" />
-            </div>
+        <div>
+          {/* Mesmo painel do card na home: ele cresce até aqui na navegação. */}
+          <ProductArtTransition productId={product.id}>
+            {heroScreenshots && heroScreenshots.length > 0 ? (
+              <PhoneStage
+                screenshots={heroScreenshots}
+                accentColor={product.accentColor}
+                tone={product.tone}
+                preload
+              />
+            ) : (
+              <div className="overflow-hidden rounded-3xl border border-cloud/10">
+                <ProductVisual product={product} className="aspect-square" />
+              </div>
+            )}
+          </ProductArtTransition>
+          {heroCaption && (
+            <p className="mt-3 text-sm text-muted">{heroCaption}</p>
           )}
-        </ProductArtTransition>
+        </div>
       </div>
     </section>
   );

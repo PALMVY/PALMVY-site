@@ -4,6 +4,28 @@ import type { Product } from "@/core/data/products";
 
 const DEFAULT_LOGO_SIZE = { width: 320, height: 220 };
 
+const LOGO_SHADOW = "shadow-[0_12px_28px_rgba(7,26,43,0.35)]";
+
+function LogoImage({
+  product,
+  className,
+}: {
+  product: Product;
+  className: string;
+}) {
+  if (!product.image) return null;
+
+  return (
+    <Image
+      src={product.image}
+      alt={product.name}
+      width={product.imageSize?.width ?? DEFAULT_LOGO_SIZE.width}
+      height={product.imageSize?.height ?? DEFAULT_LOGO_SIZE.height}
+      className={`h-auto object-contain ${className}`}
+    />
+  );
+}
+
 export function ProductVisual({
   product,
   className = "",
@@ -26,18 +48,16 @@ export function ProductVisual({
         className={`absolute inset-x-0 bottom-0 w-full h-2/3 ${lineColor}`}
       />
 
-      {product.image ? (
-        <div
-          className={`relative z-10 rounded-md p-5 shadow-[0_12px_28px_rgba(7,26,43,0.35)] ${product.logoBg}`}
-        >
-          <Image
-            src={product.image}
-            alt={product.name}
-            width={product.imageSize?.width ?? DEFAULT_LOGO_SIZE.width}
-            height={product.imageSize?.height ?? DEFAULT_LOGO_SIZE.height}
-            className="h-auto w-36 sm:w-40 object-contain"
-          />
+      {product.image && product.logoBg ? (
+        <div className={`relative z-10 rounded-md p-5 ${LOGO_SHADOW} ${product.logoBg}`}>
+          <LogoImage product={product} className="w-36 sm:w-40" />
         </div>
+      ) : product.image ? (
+        // A logo já tem fundo próprio: ela é o cartão, sem moldura em volta.
+        <LogoImage
+          product={product}
+          className={`relative z-10 w-44 rounded-md sm:w-48 ${LOGO_SHADOW}`}
+        />
       ) : (
         // Sem logo nem telas: o nome vira a arte. O texto repete o título da
         // página, então fica fora do leitor de tela.

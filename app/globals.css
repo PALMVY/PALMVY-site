@@ -36,6 +36,17 @@ html {
   }
 }
 
+/*
+ * Com a barra fixa de CTA no celular (ProductLanding), o navegador rola o
+ * elemento focado para acima dela, e o foco nunca fica escondido (WCAG 2.4.11).
+ * A altura acompanha o espaço que o Footer reserva (pb-36).
+ */
+@media (width < 48rem) {
+  html:has([data-sticky-cta]) {
+    scroll-padding-bottom: calc(9rem + env(safe-area-inset-bottom));
+  }
+}
+
 body {
   background-color: var(--color-pacific-night);
   color: var(--color-soft-gray);

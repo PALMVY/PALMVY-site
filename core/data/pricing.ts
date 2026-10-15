@@ -50,3 +50,21 @@ export const formatPrice = (value: number): string =>
 
 export const findPriceTier = (kind: ProjectKind): PriceTier | undefined =>
   PRICE_TIERS.find((tier) => tier.kind === kind);
+
+/** Pacote de créditos vendido dentro de um app. Valor em centavos, sem float. */
+export type CreditPack = {
+  credits: number;
+  priceInCents: number;
+};
+
+const BRL_CENTS_FORMATTER = new Intl.NumberFormat('pt-BR', {
+  style: 'currency',
+  currency: 'BRL',
+});
+
+export const formatCents = (cents: number): string =>
+  BRL_CENTS_FORMATTER.format(cents / 100);
+
+/** Quanto sai cada crédito do pacote, em centavos (arredondado). */
+export const getPricePerCredit = ({ credits, priceInCents }: CreditPack): number =>
+  Math.round(priceInCents / credits);

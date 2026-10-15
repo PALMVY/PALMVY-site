@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   CONTACT_EMAIL,
+  INSTAGRAM_URL,
   buildContactLink,
   getContactChannel,
   getProductContactLink,
@@ -156,5 +157,11 @@ describe('getSocialLinks', () => {
     expect(links).toEqual([
       { label: 'Instagram', href: 'https://instagram.com/palmvy' },
     ]);
+  });
+});
+
+describe('INSTAGRAM_URL', () => {
+  it('é o mesmo perfil listado nas redes sociais', () => {
+    expect(getSocialLinks()).toContainEqual({ label: 'Instagram', href: INSTAGRAM_URL });
   });
 });

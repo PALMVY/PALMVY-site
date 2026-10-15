@@ -82,6 +82,12 @@ export function ProductSteps({ steps, accentColor, tone }: ProductStepsProps) {
                   <p className="max-w-sm text-lg leading-relaxed text-muted">
                     {step.description}
                   </p>
+                  {/* Fica com o texto: no painel colorido o contraste não fecha. */}
+                  {step.screenshot.caption && (
+                    <p className="mt-4 text-sm text-muted">
+                      {step.screenshot.caption}
+                    </p>
+                  )}
                 </div>
               </li>
             ))}

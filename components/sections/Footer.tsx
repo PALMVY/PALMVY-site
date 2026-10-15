@@ -1,10 +1,6 @@
 import type { ReactNode } from "react";
 import { CtaLink } from "@/components/ui/CtaLink";
-import {
-  CONTACT_EMAIL,
-  CONTACT_LINK,
-  getSocialLinks,
-} from "@/core/data/contact";
+import { CONTACT_EMAIL, getSocialLinks } from "@/core/data/contact";
 import { products } from "@/core/data/products";
 
 const SOCIAL_LINKS = getSocialLinks();
@@ -49,12 +45,11 @@ export function Footer({ reserveStickyCtaSpace = false }: FooterProps) {
       className={`border-t border-cloud/10 bg-pacific-deep px-4 pt-12 sm:px-6 sm:pt-16 lg:px-8 ${bottomSpace}`}
     >
       <div className="max-w-6xl mx-auto">
-        <div className="grid md:grid-cols-4 gap-8 mb-12">
+        <div className="grid md:grid-cols-3 gap-8 mb-12">
           <div>
             <p className="font-display text-lg font-semibold text-cloud mb-4">PALMVY</p>
             <p className="text-sm text-muted">
-              Apps e sites feitos com calma, sem enrolação e sem vender
-              “experiência”.
+              Apps feitos com calma, sem enrolação e sem vender “experiência”.
             </p>
           </div>
 
@@ -70,30 +65,11 @@ export function Footer({ reserveStickyCtaSpace = false }: FooterProps) {
           </div>
 
           <div>
-            <h2 className="text-sm text-cloud mb-2 font-medium">Empresa</h2>
-            <ul>
-              <li>
-                <FooterLink href="/#sob-medida">Sob medida</FooterLink>
-              </li>
-              <li>
-                <FooterLink href="/#como-trabalhamos">Como funciona</FooterLink>
-              </li>
-            </ul>
-          </div>
-
-          <div>
             <h2 className="text-sm text-cloud mb-2 font-medium">Contato</h2>
             <ul>
               <li>
                 <FooterLink href={`mailto:${CONTACT_EMAIL}`}>Email</FooterLink>
               </li>
-              {CONTACT_LINK.isExternal && (
-                <li>
-                  <FooterLink href={CONTACT_LINK.href} isExternal>
-                    WhatsApp
-                  </FooterLink>
-                </li>
-              )}
               {SOCIAL_LINKS.map(({ label, href }) => (
                 <li key={label}>
                   <FooterLink href={href} isExternal>

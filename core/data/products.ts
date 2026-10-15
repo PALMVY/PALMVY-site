@@ -6,7 +6,9 @@ import { tunelab } from "./products/tunelab";
 export type {
   Product,
   ProductFaq,
+  ProductPainPoints,
   ProductPlatform,
+  ProductPricing,
   ProductScreenshot,
   ProductSpotlight,
   ProductStep,

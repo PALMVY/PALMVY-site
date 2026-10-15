@@ -1,7 +1,7 @@
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
 import { ProductLanding } from '@/components/sections/ProductLanding';
-import { getProductContactLink } from '@/core/data/contact';
+import { INSTAGRAM_URL } from '@/core/data/contact';
 import { products } from '@/core/data/products';
 import { groupFaqByTopic } from '@/components/sections/ProductFaq';
 
@@ -117,15 +117,99 @@ describe('ProductLanding: perguntas agrupadas', () => {
   });
 });
 
-describe('ProductLanding: texto de contato', () => {
-  it('não promete WhatsApp quando o botão leva para outro canal', () => {
+describe('ProductLanding: contato', () => {
+  it('convida a acompanhar no Instagram, sem WhatsApp', () => {
     for (const product of products) {
       const html = renderToStaticMarkup(<ProductLanding product={product} />);
-      const href = getProductContactLink(product).href;
-      const promisesWhatsApp = html.includes('acontece no WhatsApp');
 
-      expect(promisesWhatsApp).toBe(href.startsWith('https://wa.me/'));
-      expect(href.startsWith('/')).toBe(false);
+      expect(html).toContain(`href="${INSTAGRAM_URL}"`);
+      expect(html).toContain('Acompanhar no Instagram');
+      // O FAQ do Sossegue cita o WhatsApp de propósito; o CTA não pode.
+      expect(html).not.toContain('wa.me');
+      expect(html).not.toContain('acontece no WhatsApp');
     }
+  });
+});
+
+describe('ProductLanding: barra fixa de contato no celular', () => {
+  it('é um landmark rotulado, único em cada landing', () => {
+    for (const product of products) {
+      const html = renderToStaticMarkup(<ProductLanding product={product} />);
+
+      expect(countMatches(html, /<aside aria-label="Contato rápido"/g)).toBe(1);
+    }
+  });
+
+  // A barra fica visível o tempo todo; no fim do DOM, o leitor de tela e o
+  // teclado só chegavam nela depois da página inteira.
+  it('vem logo depois da abertura, antes dos destaques', () => {
+    for (const product of products) {
+      const html = renderToStaticMarkup(<ProductLanding product={product} />);
+      const barPosition = html.indexOf('aria-label="Contato rápido"');
+
+      expect(barPosition).toBeGreaterThan(html.indexOf('<h1'));
+      expect(barPosition).toBeLessThan(html.indexOf('Destaques'));
+    }
+  });
+});
+
+describe('ProductLanding: preço', () => {
+  // O Intl separa "R$" do número com um espaço especial.
+  const brl = (value: string): RegExp => new RegExp(`R\\$\\s${value}`);
+
+  it('mostra cada pacote do TuneLab com o preço por análise calculado', () => {
+    const html = renderLanding('tunelab');
+
+    expect(html).toContain('aria-labelledby="preco-titulo"');
+    for (const value of ['6,90', '24,90', '59,90', '4,98', '3,99']) {
+      expect(html).toMatch(brl(value));
+    }
+  });
+
+  it('vem antes das perguntas', () => {
+    const html = renderLanding('tunelab');
+    const faqStart = html.indexOf('Perguntas frequentes');
+
+    const pricingStart = html.indexOf('preco-titulo');
+
+    expect(pricingStart).toBeGreaterThan(-1);
+    expect(pricingStart).toBeLessThan(faqStart);
+  });
+
+  it('não aparece em produto sem pacotes', () => {
+    for (const id of ['sossegue', 'safezone']) {
+      expect(renderLanding(id)).not.toContain('preco-titulo');
+    }
+  });
+});
+
+describe('ProductLanding do TuneLab: avisos', () => {
+  const html = renderLanding('tunelab');
+  const caption = 'Exemplo ilustrativo. Os valores são estimativas.';
+
+  it('mostra a legenda de exemplo na abertura e no passo 2', () => {
+    expect(countMatches(html, new RegExp(caption.replace('.', '\.'), 'g'))).toBe(2);
+  });
+
+});
+
+describe('ProductLanding sem legenda nas telas (Sossegue)', () => {
+  it('não mostra legenda de exemplo', () => {
+    expect(renderLanding('sossegue')).not.toContain('Exemplo ilustrativo');
+  });
+});
+
+describe('ProductLanding: seção de dor', () => {
+  it('aparece no Sossegue entre a abertura e os destaques', () => {
+    const html = renderLanding('sossegue');
+    const pain = html.indexOf('aria-labelledby="dor-titulo"');
+
+    expect(pain).toBeGreaterThan(html.indexOf('<h1'));
+    expect(pain).toBeLessThan(html.indexOf('Destaques'));
+    expect(html).toContain('Seu negócio não deveria morar na sua cabeça.');
+  });
+
+  it('não aparece em produto sem dores cadastradas', () => {
+    expect(renderLanding('tunelab')).not.toContain('dor-titulo');
   });
 });

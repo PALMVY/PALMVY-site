@@ -3,7 +3,9 @@ import {
   ALWAYS_INCLUDED,
   PRICE_TIERS,
   findPriceTier,
+  formatCents,
   formatPrice,
+  getPricePerCredit,
 } from '@/core/data/pricing';
 
 describe('formatPrice', () => {
@@ -48,5 +50,22 @@ describe('PRICE_TIERS', () => {
 describe('findPriceTier', () => {
   it('encontra a faixa pelo tipo', () => {
     expect(findPriceTier('app')?.startingPrice).toBe(20000);
+  });
+});
+
+describe('formatCents', () => {
+  it('formata centavos em reais, com centavos', () => {
+    expect(formatCents(690)).toMatch(/^R\$\s6,90$/);
+    expect(formatCents(5990)).toMatch(/^R\$\s59,90$/);
+  });
+});
+
+describe('getPricePerCredit', () => {
+  it('divide o pacote pelos créditos, em centavos', () => {
+    expect(getPricePerCredit({ credits: 5, priceInCents: 2490 })).toBe(498);
+  });
+
+  it('arredonda para o centavo mais próximo', () => {
+    expect(getPricePerCredit({ credits: 15, priceInCents: 5990 })).toBe(399);
   });
 });

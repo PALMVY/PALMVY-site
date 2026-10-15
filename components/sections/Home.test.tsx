@@ -52,11 +52,17 @@ describe('Home', () => {
     }
   });
 
-  it('mostra todas as faixas de preço com o valor de core/data/pricing', () => {
-    for (const { name, startingPrice } of PRICE_TIERS) {
-      expect(html).toContain(name);
-      expect(html).toContain(formatPrice(startingPrice));
+  // Sob medida pausado: preço anunciado vincula (CDC, art. 30), então some junto.
+  it('avisa que o sob medida está pausado, sem mostrar preços', () => {
+    expect(html).toContain('Projetos sob medida estão pausados.');
+    for (const { startingPrice } of PRICE_TIERS) {
+      expect(html).not.toContain(formatPrice(startingPrice));
     }
+  });
+
+  it('não leva ninguém para o WhatsApp', () => {
+    expect(html).not.toContain('wa.me');
+    expect(html).not.toContain('Vamos conversar?');
   });
 
   it('risca cada termo do manifesto', () => {

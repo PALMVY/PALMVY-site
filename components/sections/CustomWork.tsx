@@ -1,4 +1,5 @@
 import { CtaLink } from "@/components/ui/CtaLink";
+import { PriceLedger } from "@/components/ui/PriceLedger";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Strike } from "@/components/ui/Strike";
 import { SURFACE } from "@/components/ui/surfaceStyles";
@@ -27,27 +28,15 @@ export function CustomWork() {
         </div>
 
         <div className={`rounded-3xl p-6 sm:p-9 ${SURFACE}`}>
-          <dl>
-            {PRICE_TIERS.map(({ kind, name, scope, startingPrice }) => (
-              <div
-                key={kind}
-                className="flex flex-wrap items-end justify-between gap-x-6 gap-y-2 border-b border-cloud/10 py-6 first:pt-0"
-              >
-                <dt>
-                  <span className="block text-xl font-bold text-cloud sm:text-2xl">{name}</span>
-                  <span className="mt-1 block text-muted">{scope}</span>
-                </dt>
-                <dd className="ml-auto text-right">
-                  <span className="block font-mono text-xs uppercase tracking-widest text-sunset">
-                    A partir de
-                  </span>
-                  <span className="text-3xl font-extrabold tracking-tight text-cloud tabular-nums sm:text-4xl">
-                    {formatPrice(startingPrice)}
-                  </span>
-                </dd>
-              </div>
-            ))}
-          </dl>
+          <PriceLedger
+            rows={PRICE_TIERS.map(({ kind, name, scope, startingPrice }) => ({
+              id: kind,
+              name,
+              detail: scope,
+              label: "A partir de",
+              price: formatPrice(startingPrice),
+            }))}
+          />
 
           <p className="mb-4 mt-7 font-mono text-xs uppercase tracking-widest text-muted">
             Sempre incluso

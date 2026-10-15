@@ -95,16 +95,14 @@ export function Hero() {
           </ul>
 
           <p className="mt-7 max-w-lg text-lg leading-relaxed text-soft-gray sm:text-xl">
-            A gente cria os próprios apps e faz apps e sites sob medida.{" "}
-            <strong className="font-semibold text-cloud">Com preço na mesa.</strong>
+            A gente cria e cuida dos próprios apps.{" "}
+            <strong className="font-semibold text-cloud">Um problema real por app.</strong>
           </p>
 
+          {/* "Projeto sob medida" volta para cá quando o sob medida reabrir. */}
           <div className="mt-10 flex flex-col gap-3 sm:flex-row">
             <CtaLink href="#produtos" isExternal={false} variant="primary" size="xl">
               Ver produtos <span aria-hidden="true">→</span>
-            </CtaLink>
-            <CtaLink href="#sob-medida" isExternal={false} variant="secondary" size="xl">
-              Projeto sob medida <span aria-hidden="true">→</span>
             </CtaLink>
           </div>
         </div>

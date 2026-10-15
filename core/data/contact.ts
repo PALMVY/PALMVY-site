@@ -13,8 +13,19 @@ export type SocialLink = {
   href: string | null;
 };
 
+export const INSTAGRAM_URL = 'https://www.instagram.com/palmvyco/';
+
+/**
+ * CTA das landings enquanto os apps estão "em breve": acompanhar no Instagram.
+ * O site não coleta dado nenhum (sem lista de espera nem WhatsApp por ora).
+ */
+export const PRODUCT_FOLLOW_LINK: ContactLink = {
+  href: INSTAGRAM_URL,
+  isExternal: true,
+};
+
 const SOCIAL_LINKS: SocialLink[] = [
-  { label: 'Instagram', href: 'https://www.instagram.com/palmvyco/' },
+  { label: 'Instagram', href: INSTAGRAM_URL },
   { label: 'Twitter/X', href: 'https://x.com/palmvyco' },
   { label: 'Dev.to', href: 'https://dev.to/palmvyco' },
 ];

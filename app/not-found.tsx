@@ -1,8 +1,14 @@
+import type { Metadata } from "next";
 import { Footer } from "@/components/sections/Footer";
 import { Navbar } from "@/components/sections/Navbar";
 import { CtaLink } from "@/components/ui/CtaLink";
 import { HorizonLines } from "@/components/ui/HorizonLines";
 import { SectionLabel } from "@/components/ui/SectionLabel";
+
+// Sem isso a aba herda o título da home e o leitor de tela anuncia a página errada.
+export const metadata: Metadata = {
+  title: "Página não encontrada | PALMVY",
+};
 
 // Endereço que não existe ou produto sem landing (notFound() em /produtos/[slug]).
 export default function NotFound() {
@@ -24,8 +30,8 @@ export default function NotFound() {
             Essa página não existe.
           </h1>
           <p className="mt-6 max-w-md text-lg leading-relaxed text-muted">
-            O link pode estar errado ou a página mudou de lugar. Os apps e os
-            preços continuam na página inicial.
+            O link pode estar errado ou a página mudou de lugar. Os apps
+            continuam na página inicial.
           </p>
 
           <div className="mt-10 flex flex-col gap-3 sm:flex-row">

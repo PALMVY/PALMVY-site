@@ -14,4 +14,9 @@ describe('LegalPage', () => {
   it('mantém o texto em volta do e-mail', () => {
     expect(html).toContain('fale com a gente em');
   });
+
+  // Linhas de ~100 caracteres no desktop cansam a leitura; o alvo é 65–75.
+  it('limita a largura dos parágrafos a ~75 caracteres por linha', () => {
+    expect(html).toContain('max-w-lg space-y-4');
+  });
 });

@@ -1,11 +1,14 @@
 import Link from 'next/link';
 import { MobileMenu } from '@/components/sections/MobileMenu';
-import { CtaLink } from '@/components/ui/CtaLink';
 import { Logo } from '@/components/ui/Logo';
-import { CONTACT_LINK } from '@/core/data/contact';
 import { NAV_LINKS } from '@/core/data/navigation';
 
-export function Navbar() {
+type NavbarProps = {
+  /** Rota da página atual (ex.: a landing do app), marcada no menu. */
+  currentHref?: string;
+};
+
+export function Navbar({ currentHref }: NavbarProps) {
   return (
     <nav className="fixed top-0 z-50 w-full bg-pacific-night/90 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
@@ -14,29 +17,28 @@ export function Navbar() {
         </Link>
 
         <div className="hidden items-center gap-8 md:flex">
-          {NAV_LINKS.map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
-              className="inline-flex min-h-11 items-center text-sm text-soft-gray transition-colors hover:text-cloud motion-reduce:transition-none"
-            >
-              {label}
-            </Link>
-          ))}
+          {NAV_LINKS.map(({ href, label }) => {
+            const isCurrent = href === currentHref;
+
+            return (
+              <Link
+                key={href}
+                href={href}
+                aria-current={isCurrent ? "page" : undefined}
+                className={`inline-flex min-h-11 items-center text-sm transition-colors hover:text-cloud motion-reduce:transition-none ${
+                  isCurrent
+                    ? "text-cloud underline decoration-sunset decoration-2 underline-offset-8"
+                    : "text-soft-gray"
+                }`}
+              >
+                {label}
+              </Link>
+            );
+          })}
         </div>
 
-        <div className="flex items-center gap-2">
-          {/* Contorno, não sólido: o laranja sólido fica com o CTA da página (One Sun Rule). */}
-          <CtaLink
-            href={CONTACT_LINK.href}
-            isExternal={CONTACT_LINK.isExternal}
-            className="hidden h-11 items-center rounded-md border border-sunset/60 px-4 text-sm font-medium text-cloud transition-colors hover:bg-sunset hover:text-pacific-night motion-reduce:transition-none sm:inline-flex"
-          >
-            Vamos conversar?
-          </CtaLink>
-
-          <MobileMenu links={NAV_LINKS} contactLink={CONTACT_LINK} />
-        </div>
+        {/* Sem "Vamos conversar?" enquanto o sob medida está pausado. */}
+        <MobileMenu links={NAV_LINKS} currentHref={currentHref} />
       </div>
     </nav>
   );

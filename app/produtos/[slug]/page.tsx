@@ -54,7 +54,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   return (
     <div className="flex min-h-screen flex-col bg-pacific-night">
-      <Navbar />
+      <Navbar currentHref={product.landingPage} />
       <main className="flex-1 pt-16">
         <ProductLanding product={product} />
       </main>

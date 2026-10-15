@@ -73,7 +73,7 @@ export function LegalPage({ document }: { document: LegalDocument }) {
               <h2 className="mb-4 font-display text-2xl font-bold tracking-tight text-cloud">
                 {heading}
               </h2>
-              <div className="space-y-4 text-base text-soft-gray leading-relaxed">
+              <div className="max-w-lg space-y-4 text-base text-soft-gray leading-relaxed">
                 {paragraphs.map((paragraph) => (
                   <LegalParagraph key={paragraph} text={paragraph} />
                 ))}

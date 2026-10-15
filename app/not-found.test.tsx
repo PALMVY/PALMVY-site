@@ -14,3 +14,15 @@ describe('NotFound', () => {
     expect(html).toContain('href="/#produtos"');
   });
 });
+
+describe('NotFound: título da aba', () => {
+  it('diz que a página não existe, e não repete o título da home', async () => {
+    const { metadata } = await import('@/app/not-found');
+
+    expect(metadata.title).toBe('Página não encontrada | PALMVY');
+  });
+
+  it('não promete preços na home, que não mostra mais o sob medida', () => {
+    expect(renderToStaticMarkup(<NotFound />)).not.toContain('preços');
+  });
+});

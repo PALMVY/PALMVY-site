@@ -1,12 +1,12 @@
+import { products } from './products';
+
 export type NavLink = {
   href: string;
   label: string;
 };
 
-// O prefixo "/" faz os links funcionarem também fora da home (ex.: landing pages).
-export const NAV_LINKS: readonly NavLink[] = [
-  { href: '/#produtos', label: 'Produtos' },
-  { href: '/#sob-medida', label: 'Sob medida' },
-  { href: '/#como-trabalhamos', label: 'Como funciona' },
-  { href: '/#contato', label: 'Contato' },
-];
+// Foco nos apps próprios: o menu leva direto a cada landing page.
+// (Com o sob medida de volta, as âncoras /#sob-medida e /#contato voltam aqui.)
+export const NAV_LINKS: readonly NavLink[] = products.flatMap(
+  ({ name, landingPage }) => (landingPage ? [{ label: name, href: landingPage }] : []),
+);
